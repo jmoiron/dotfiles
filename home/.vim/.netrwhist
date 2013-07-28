@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/mnt/omocha/jmoiron/.local/bin'
+let g:netrw_dirhist_2='/mnt/omocha/jmoiron/.ve/flavors/bin'
+let g:netrw_dirhist_3='/mnt/omocha/jmoiron/.ve/flavors'
+let g:netrw_dirhist_4='/mnt/omocha/jmoiron/devel/flavors/speedparser/feed-errors'
+let g:netrw_dirhist_5='/mnt/omocha/jmoiron/devel/compiz/compiz/compiz-0.8.6/debian'
+let g:netrw_dirhist_6='/mnt/omocha/jmoiron/devel/compiz/compiz/compiz-0.8.6'
+let g:netrw_dirhist_7='/mnt/omocha/jmoiron/devel/compiz/compiz/compiz-0.8.6/debian'
+let g:netrw_dirhist_8='/mnt/omocha/jmoiron/godevel/monet/.git'
+let g:netrw_dirhist_9='/mnt/omocha/jmoiron'

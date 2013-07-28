@@ -1,0 +1,1 @@
+markdown-1.1.0.vba: call delete('/mnt/omocha/jmoiron/.vim/ftdetect/markdown.vim')|call delete('/mnt/omocha/jmoiron/.vim/snippets/markdown.snippets')|call delete('/mnt/omocha/jmoiron/.vim/syntax/markdown.vim')
