@@ -123,17 +123,11 @@ if [ -d ~/.bash_completion.d ]; then
     done
 fi
 
+# git junk
+
 function follow {
     git config --add branch.$1.remote origin
     git config --add branch.$1.merge refs/heads/$1
-}
-
-function cherry-pick {
-    git checkout release
-    git pull --rebase
-    git cherry-pick $1
-    git push
-    git checkout master
 }
 
 function gcp {
@@ -145,35 +139,19 @@ function gup {
     git co $1 && git pull && git co $current
 }
 
-function git-ci {
+function gci {
     git pull --rebase && git push
-}
-
-function git-svn-fetch {
-    git svn fetch
-    git rebase --onto remotes/git-svn master
-}
-
-function flassh {
-    ssh -i ~/.ssh/flavors.pem root@$1 ${@:2}
-}
-
-function uflassh {
-    ssh -i ~/.ssh/flavors.pem ubuntu@$1 ${@:2}
-}
-
-function goossh {
-    ssh -i ~/.ssh/goodsie.pem ubuntu@${1} ${@:2}
-}
-
-function flascp {
-    scp -i ~/.ssh/flavors.pem $@
 }
 
 function md5 {
     md5sum $1 |cut -f1 -d' '
     return $?
 }
+
+function github-clone() {
+    git clone git@github.com:jmoiron/$1
+}
+
 
 function vd { 
     $VC diff $* |gvim - 
@@ -184,21 +162,7 @@ function ssh_export {
     cat ~/.ssh/id_rsa.pub | ssh "$1" "cat - >> ~/.ssh/authorized_keys"
 }
 
-function ssup {
-    echo "scp \"$1\" jmoiron.net:public_html/ss/\"$2\""
-    scp "$1" jmoiron.net:public_html/ss/"$2"
-    if [ -z "$2" ]; then
-        echo "http://jmoiron.net/~jmoiron/ss/`basename $1`" 
-    else
-        echo "http://jmoiron.net/~jmoiron/ss/$2"
-    fi
-}
-
-#export GOROOT=$HOME/godevel/go
-#export GOPATH=$HOME/godevel/lib
-
 # add some crap to the path
-#export PATH=$PATH:/opt/vmware/bin/
 export PATH=$PATH:/opt/bin/:$HOME/.local/bin:$GOROOT/bin
 export PATH=$PATH:$HOME/.gem/ruby/1.8/bin
 export PATH=$PATH:$HOME/devel/android/eclipse
@@ -233,14 +197,9 @@ export BLOCKSIZE=1024
 
 WINEARCH=win32
 WINEPREFIX=~/.wine
-#export GOARCH=amd64
-#export GOOS=linux
+
+# go development
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-
-function github-clone() {
-    git clone git@github.com:jmoiron/$1
-}
-
 gvm use go1.1.1 > /dev/null
 
 # configuration management
