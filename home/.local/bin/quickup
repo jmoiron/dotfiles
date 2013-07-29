@@ -1,0 +1,80 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""Quickly upload shit to my server."""
+
+import string
+import random
+import subprocess
+import optparse
+import gtk, pynotify
+
+def test_for_xclip():
+    """Determine if xclip is installed."""
+    p = subprocess.Popen(['xclip', '-h'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    p.wait()
+    return not p.returncode
+
+def copy(text):
+    """Copy some text to the x clipboard."""
+    p = subprocess.Popen("echo '%s' | xclip" % text, shell=True)
+    p.wait()
+    return not p.returncode
+
+def base36(number):
+    def convert(num, dd=False):
+        if not dd:
+            dd = dict(zip(range(36), list(string.digits+string.ascii_lowercase)))
+        if num == 0: return ''
+        num,rem = divmod(num, 36)
+        return convert(num, dd) + dd[rem]
+    return convert(number)
+
+def notify(message):
+    if not pynotify.init("quickup"):
+        return
+    n = pynotify.Notification(message)
+    n.set_timeout(3500)
+    n.show()
+
+def make_filename(hint):
+    if hint != "auto":
+        return hint
+    return base36(random.randint(2**16,2**36))
+
+def parse_args():
+    parser = optparse.OptionParser(version="1.0")
+    parser.add_option("-d", "--destination", default="jmoiron.net:images/")
+    parser.add_option("-u", "--url-base", default="http://jmoiron.net/i/")
+    parser.add_option("-f", "--filename", default="auto")
+    opts, args = parser.parse_args()
+    return opts, args
+
+def main():
+    opts, args = parse_args()
+    if not test_for_xclip():
+        print "ERROR: You need to install xclip for quickup to work."
+        notify("ERROR: You need to install xclip for quickup to work.")
+        return
+    local_name = args[0]
+    filetype = local_name.rsplit('.', 1)[-1]
+    remote_name = make_filename(opts.filename) + '.%s' % (filetype.lower())
+    remote_url = opts.url_base + remote_name
+    remote_dir = opts.destination.rstrip('/')
+    if remote_dir.endswith(':'):
+        remote_dest = remote_dir + remote_name
+    else:
+        remote_dest = '%s/%s' % (remote_dir, remote_name)
+
+    p = subprocess.Popen(['scp', local_name, remote_dest])
+    p.wait()
+    if not p.returncode:
+        copy(remote_url)
+        print "Uploaded %s to %s" % (local_name, remote_url)
+        notify("Uploaded %s to %s" % (local_name, remote_url))
+    else:
+        notify("Something went wrong uploading %s to %s" % (local_name, remote_dest))
+
+if __name__ == '__main__':
+    main()
+

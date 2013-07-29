@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if test -z "$1"
+then
+    echo "usage: $0 <term> [match]"
+    exit 0
+fi
+
+opts="-aHn"
+term="$1"
+match="$2"
+
+if [ "$1" = "-i" ]; then
+   opts="-iaHn"
+   term="$2"
+   match="$3"
+fi
+
+if test -z "$match"
+then
+    match=".py$"
+fi
+
+grep $opts --color=always -R "$term" `find . -type f |grep "$match" |grep -v '.svn' |grep -v '.swp' |grep -v '.git' |grep -v '/migrations/' |grep -v '^./test/' |grep -v '.pyc$'`
