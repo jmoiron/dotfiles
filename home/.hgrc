@@ -2,11 +2,13 @@
 hgext.bookmarks = 
 color =
 mq =
-#hggit =
 #hgshelve = /mnt/omocha/jmoiron/devel/hgshelve/hgshelve.py
 
+[hostfingerprints]
+bitbucket.org = 24:9c:45:8b:9c:aa:ba:55:4e:01:6d:58:ff:e4:28:7d:2a:14:ae:3b
+
 [web]
-cacerts = /etc/ssl/certs/ca-certificates.crt
+#cacerts = /etc/ssl/certs/ca-certificates.crt
 
 [ui]
 username = Jason Moiron <jmoiron@jmoiron.net>
