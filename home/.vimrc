@@ -152,8 +152,8 @@ inoremap <expr> <C-space> pumvisible() ? '<C-n>' :
 
 " gvim only options:
 " gruvbox only behaves when jellybeans has been loaded..
+" colo gruvbox
 colo jellybeans
-colo gruvbox
 set cursorline
 
 if has("gui_running")

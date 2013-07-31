@@ -1,0 +1,16 @@
+# OSX only bashrc
+
+export PATH="/usr/local/Cellar/python/2.7.1/bin:$PATH"
+export PATH="/usr/local/share/python/:$PATH"
+export PATH="`brew --prefix`/bin:$PATH"
+export PATH="$PATH:/usr/local/sbin"
+
+if [ -n `which gls` ]; then
+    alias ls="gls -F --color=auto"
+fi
+
+bind '"\e[5C": forward-word'
+bind '"\e[5D": backward-word'
+bind '"\e[1;5C": forward-word'
+bind '"\e[1;5D": backward-word'
+

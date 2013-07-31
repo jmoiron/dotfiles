@@ -1,26 +1,10 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
 
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
-# this used to be necessary due to some bugs for japanese input support
-#export LANG="ja_JP.UTF-8"
-#export LC_ALL="ja_JP.UTF-8"
-
 export LANGUAGE=en
-
 export G_FILENAME_ENCODING="UTF8"
-
-# this is old stuff I used to need running startx/xfce by hand
-#export GTK_IM_MODULE="scim"
-#export XIM_PROGRAM="scim -d"
-#export XMODIFIERS="@im=scim"
-
-#export GTK_IM_MODULE=ibus
-#export XMODIFIERS=@im=ibus
-#export QT_IM_MODULE=ibus
 
 # plenty of terminals say they are xterm but aren't;  attempt to see if we're
 # using a terminal which supports 256 color and set TERM to ~256color if we are
@@ -66,6 +50,7 @@ if [ -z "$debian_chroot" -a -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+# save our current operating system in the OS variable for quick use elsewhere
 case $(uname) in
     Darwin)
         OS="OSX"
@@ -75,7 +60,7 @@ case $(uname) in
         ;;
 esac
 
-# Comment in the above and uncomment this below for a color prompt
+# HH:MM:SS user@hostname:path$
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\t\[\033[00m\] \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 # If this is an xterm set the title to user@host:dir
@@ -106,17 +91,10 @@ if [ "$TERM" != "dumb" ]; then
     #alias vdir='ls --color=auto --format=long'
 fi
 
-if [ -d $HOME/.pythonbrew ]; then
-    source $HOME/.pythonbrew/etc/bashrc
-fi
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+# enable programmable completion features 
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
-
 if [ -d ~/.bash_completion.d ]; then
     for i in ~/.bash_completion.d/*; do
         . $i
@@ -124,7 +102,6 @@ if [ -d ~/.bash_completion.d ]; then
 fi
 
 # git junk
-
 function follow {
     git config --add branch.$1.remote origin
     git config --add branch.$1.merge refs/heads/$1
@@ -152,9 +129,8 @@ function github-clone() {
     git clone git@github.com:jmoiron/$1
 }
 
-
 function vd { 
-    $VC diff $* |gvim - 
+    git diff $* |gvim - 
 }
 
 function ssh_export {
@@ -163,18 +139,12 @@ function ssh_export {
 }
 
 # add some crap to the path
-export PATH=$PATH:/opt/bin/:$HOME/.local/bin:$GOROOT/bin
+export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/.gem/ruby/1.8/bin
-export PATH=$PATH:$HOME/devel/android/eclipse
-export PATH=$PATH:$GOROOT/pkg/tool/linux_amd64/
-export PATH=$PATH:$HOME/godevel/lib/bin
 
 # add homebrew python path in OSX
 if [ "$OS" = "OSX" ]; then
-    export PATH="/usr/local/Cellar/python/2.7.1/bin:$PATH"
-    export PATH="/usr/local/share/python/:$PATH"
-    export PATH="`brew --prefix`/bin:$PATH"
-    export PATH="$PATH:/usr/local/sbin"
+    source ~/.bashrc.osx
 else
     alias open="xdg-open"
 fi
@@ -185,16 +155,21 @@ export EDITOR=vim
 export WORKON_HOME=$HOME/.ve
 export VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME"
 export VIRTUALENVWRAPPER_LOG_DIR="$WORKON_HOME"
-source $HOME/.ve/virtualenvwrapper_bashrc
+source /usr/local/bin/virtualenvwrapper.sh
 export PIP_RESPECT_VIRTUALENV=true
 
+if [ -d $HOME/.pythonbrew ]; then
+    source $HOME/.pythonbrew/etc/bashrc
+fi
+
+
+# colorize diff aliases for hg and svn
 alias hgcd="hg diff |pygmentize -ldiff"
 alias svncd="svn diff |pygmentize -ldiff"
 
+# miscellaneous rubbish
 export NODE_PATH="/usr/local/lib/node"
-
 export BLOCKSIZE=1024
-
 WINEARCH=win32
 WINEPREFIX=~/.wine
 
