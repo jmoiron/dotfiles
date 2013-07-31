@@ -7,7 +7,7 @@ which is provided as a static binary for both Linux (i386 & x86_64) and OSX in `
 The basic bootstrap process is:
 
 ```bash
-git clone git@github.com:jmoiron/dotfiles.git ~/dotfiles`
+git clone git@github.com:jmoiron/dotfiles.git
 alias cm="~/dotfiles/bin/cm"
 export CM_CONFIG_PATH="$HOME/dotfiles/home"
 export CM_CONFIG_ROOT="$HOME"
