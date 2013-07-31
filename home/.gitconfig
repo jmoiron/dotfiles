@@ -1,6 +1,6 @@
 [user]
-	email = jmoiron@jmoiron.net
-	name = Jason Moiron
+    email = jmoiron@jmoiron.net
+    name = Jason Moiron
 [color]
     ui = auto
 [color "branch"]
