@@ -183,8 +183,16 @@ gvm use go1.1.1 > /dev/null 2>&1
 export CM_CONFIG_PATH="$HOME/dotfiles/home"
 export CM_UNSAFE_SYNC=true
 export CM_CONFIG_ROOT="$HOME"
+alias cm="~/dotfiles/bin/cm"
+function cmup {
+    pushd ~/dotfiles > /dev/null
+    git pull
+    popd > /dev/null
+}
 
 if [ -f ~/.bashrc.local ]; then
     source ~/.bashrc.local
 fi
+
+
 
