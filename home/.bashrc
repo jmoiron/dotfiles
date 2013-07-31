@@ -155,7 +155,9 @@ export EDITOR=vim
 export WORKON_HOME=$HOME/.ve
 export VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME"
 export VIRTUALENVWRAPPER_LOG_DIR="$WORKON_HOME"
-source /usr/local/bin/virtualenvwrapper.sh
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+    source /usr/local/bin/virtualenvwrapper.sh
+fi
 export PIP_RESPECT_VIRTUALENV=true
 
 if [ -d $HOME/.pythonbrew ]; then
@@ -175,7 +177,7 @@ WINEPREFIX=~/.wine
 
 # go development
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-gvm use go1.1.1 > /dev/null
+gvm use go1.1.1 > /dev/null 2>&1
 
 # configuration management
 export CM_CONFIG_PATH="$HOME/dotfiles/home"
