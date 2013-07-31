@@ -2,7 +2,7 @@ These are my dotfiles.
 
 Git keeps track of them and serves as a centralized point for distribution,
 but the day to day maintenance is done with [cm](http://github.com/jmoiron/cm),
-which is provided as a static binary for both amd64 Linux and OSX in `bin`.
+which is provided as a static binary for both Linux (i386 & x86_64) and OSX in `bin`.
 
 The basic bootstrap process is:
 
