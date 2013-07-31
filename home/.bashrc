@@ -74,7 +74,7 @@ esac
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+    source ~/.bash_aliases
 fi
 
 # enable color support of ls and also add handy aliases
@@ -93,11 +93,11 @@ fi
 
 # enable programmable completion features 
 if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
+    source /etc/bash_completion
 fi
 if [ -d ~/.bash_completion.d ]; then
     for i in ~/.bash_completion.d/*; do
-        . $i
+        source $i
     done
 fi
 
@@ -181,4 +181,8 @@ gvm use go1.1.1 > /dev/null
 export CM_CONFIG_PATH="$HOME/dotfiles/home"
 export CM_UNSAFE_SYNC=true
 export CM_CONFIG_ROOT="$HOME"
+
+if [ -f ~/.bashrc.local ]; then
+    source ~/.bashrc.local
+fi
 
