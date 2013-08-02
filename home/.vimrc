@@ -137,6 +137,7 @@ set enc=utf-8
 
 if has("ruby")
     map <F3> :FuzzyFinderTextMate<CR>
+    map <C-t> :FuzzyFinderTextMate<CR>
 endif
 
 set ofu=syntaxcomplete#Complete
