@@ -35,10 +35,17 @@ function! BufPos_ActivateBuffer(num)
 endfunction
 
 function! BufPos_Initialize()
-    for i in range(1, 9) 
-        exe "map " . s:modifier . i . "> :call BufPos_ActivateBuffer(" . i . ")<CR>"
-    endfor
-    exe "map " . s:modifier . "0> :call BufPos_ActivateBuffer(10)<CR>"
+    if has("gui_running")
+        for i in range(1, 9)
+            exe "map " . s:modifier . i . "> :call BufPos_ActivateBuffer(" . i . ")<CR>"
+        endfor
+        exe "map " . s:modifier . "0> :call BufPos_ActivateBuffer(10)<CR>"
+    else
+        for i in range(1, 0)
+            exe "map <ESC>[" . i . " :call BufPos_ActivateBuffer(" . i . ")<CR>"
+        endfor
+        exe "map <ESC>[0 :call BufPos_ActivateBuffer(10)<CR>"
+    endif
 endfunction
 
 autocmd VimEnter * call BufPos_Initialize()
