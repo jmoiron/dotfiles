@@ -109,7 +109,9 @@ set laststatus=2
 :let g:buftabs_in_statusline=1
 :let g:buftabs_ordinal=1
 :let g:fuzzy_roots=["."]
-:let g:fuzzy_ignore="*.pyc;*.swp;*.gif;*.png"
+" fuzzy file finder uses File.fnmatch underneath
+" http://www.ruby-doc.org/core-2.0/File.html#method-c-fnmatch
+:let g:fuzzy_ignore="*.pyc;*.swp;*.gif;*.png;**node_modules**;**lib/bootstrap**;**/migrations/**"
 
 " ctrl-h to kill the search highlight
 nmap <silent> <C-H> :silent noh<CR>
@@ -196,4 +198,7 @@ vmap gk :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR
 set mouse=a
 set ttymouse=xterm2
 
+if filereadable($HOME .  "/.vimrc.local")
+    exec ':so ' . $HOME . "/.vimrc.local"
+endif
 

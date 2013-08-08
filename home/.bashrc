@@ -14,6 +14,7 @@ if [ "$TERM" = "xterm" ]; then
             "XTerm(256)") TERM="xterm=256color" ;;
             "XTerm(88)") TERM="xterm-88color" ;;
             "XTerm") ;;
+            "") ;;
             *)
                 echo "Unrecognized XTERM_VERSION: $XTERM_VERSION"
                 ;;
