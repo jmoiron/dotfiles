@@ -41,4 +41,17 @@ fi
 
 alias t="t --task-dir ~/tasks --list tasks"
 
+function go-link {
+    name=`basename $1`
+    dirpath=`dirname $1`/$name
+    pkg_path="$HOME/.gvm/pkgsets/go$GO_VERSION/global/src/github.com/jmoiron"
+    mkdir -p $pkg_path
+    if [ -d "$pkg_path/$name" ]; then
+        rm -rf $pkg_path/$name
+    fi
+    if [ -h "$pkg_path/$name" ]; then
+        rm $pkg_path/$name
+    fi
+    ln -s $dirpath $pkg_path/
+}
 

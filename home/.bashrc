@@ -73,11 +73,6 @@ xterm*|rxvt*)
     ;;
 esac
 
-# Alias definitions.
-if [ -f ~/.bash_aliases ]; then
-    source ~/.bash_aliases
-fi
-
 # enable color support of ls and also add handy aliases
 if [ "$TERM" != "dumb" ]; then
     if [ "$OS" != "OSX" ]; then
@@ -177,8 +172,9 @@ WINEARCH=win32
 WINEPREFIX=~/.wine
 
 # go development
+export GO_VERSION=1.1.2
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-gvm use go1.1.1 > /dev/null 2>&1
+gvm use go$GO_VERSION > /dev/null 2>&1
 
 # configuration management
 export CM_CONFIG_PATH="$HOME/dotfiles/home"
@@ -193,6 +189,10 @@ function cmup {
 
 if [ -f ~/.bashrc.local ]; then
     source ~/.bashrc.local
+fi
+
+if [ -f ~/.bash_aliases ]; then
+    source ~/.bash_aliases
 fi
 
 
