@@ -84,7 +84,7 @@ fun! s:SelectHTML()
 endfun
 
 autocmd BufNewFile,BufRead *.mako setlocal ft=mako
-autocmd BufNewFile,BufRead *.less setlocal ft=css
+autocmd BufNewFile,BufRead *.less setlocal ft=less
 autocmd BufNewFile,BufRead *.jinja setlocal ft=htmljinja
 autocmd BufNewFile,BufRead *.html,*.htm call s:SelectHTML()
 autocmd BufNewFile,BufRead *.json setlocal ft=javascript
