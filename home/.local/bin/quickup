@@ -17,7 +17,7 @@ def test_for_xclip():
 
 def copy(text):
     """Copy some text to the x clipboard."""
-    p = subprocess.Popen("echo '%s' | xclip" % text, shell=True)
+    p = subprocess.Popen("echo '%s' | xclip" % text.strip(), shell=True)
     p.wait()
     return not p.returncode
 

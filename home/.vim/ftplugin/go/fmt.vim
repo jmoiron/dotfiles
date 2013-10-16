@@ -18,10 +18,11 @@ command! -buffer Fmt call :silent s:GoFormat()
 
 function! s:GoFormat()
     let view = winsaveview()
-    silent %!gofmt
+    silent %!goimports
     if v:shell_error
         let errors = []
         for line in getline(1, line('$'))
+            echohl Error | echomsg line |echohl None
             let tokens = matchlist(line, '^\(.\{-}\):\(\d\+\):\(\d\+\)\s*\(.*\)')
             if !empty(tokens)
                 call add(errors, {"filename": @%,
