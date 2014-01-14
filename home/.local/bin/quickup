@@ -73,7 +73,7 @@ def notify(message):
     if OS == 'Darwin':
         # call terminal-notifier;  use the terminal -sender because some
         # versions don't work without it
-        subprocess.call(['terminal-notifier', '--open', 'quickup', '--message',
+        subprocess.call(['terminal-notifier', '-open', 'quickup', '-message',
             message, '-sender', 'com.apple.Terminal'])
     else:
         if not pynotify.init("quickup"):
