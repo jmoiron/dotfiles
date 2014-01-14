@@ -22,7 +22,7 @@ def which(program):
 # do OS/version checks up front so we know we can do notifications
 if OS == 'Darwin':
     version = map(int, platform.mac_ver()[0].split('.'))
-    if version < (10, 9):
+    if version < [10, 9]:
         print "ERROR: OSX support only for 10.9+ (new notification-center required)"
         sys.exit(-1)
     if not which("pbcopy"):
