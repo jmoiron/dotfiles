@@ -3,23 +3,60 @@
 
 """Quickly upload shit to my server."""
 
+import os, platform, sys
 import string
 import random
 import subprocess
 import optparse
-import gtk, pynotify
 
-def test_for_xclip():
-    """Determine if xclip is installed."""
-    p = subprocess.Popen(['xclip', '-h'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    p.wait()
-    return not p.returncode
+OS = platform.system()
+enable_notifications = False
+
+def which(program):
+    """Return the path of program or the empty string if not found."""
+    for path in os.environ["PATH"].split(os.pathsep):
+        if os.path.exists(os.path.join(path, program)):
+            return os.path.join(path, program)
+    return ""
+
+# do OS/version checks up front so we know we can do notifications
+if OS == 'Darwin':
+    version = map(int, platform.mac_ver()[0].split('.'))
+    if version < (10, 9):
+        print "ERROR: OSX support only for 10.9+ (new notification-center required)"
+        sys.exit(-1)
+    if not which("pbcopy"):
+        print "ERROR: could not find pbcopy, which is required for quickup."
+        sys.exit(-1)
+    if not which("terminal-notifier"):
+        print "ERROR: notifications require `terminal-notifier`, install via brew."
+    else:
+        enable_notifications = True
+elif OS == 'Linux':
+    if not which("xclip"):
+        print "ERROR: Could not find xclip, which is required for quickup."
+        sys.exit(-1)
+    try:
+        import pynotify
+        enable_notifications = True
+    except ImportError:
+        import traceback
+        print "Could not import pynotify, error was:"
+        traceback.print_exc()
+        print "Continuing without notifications."
+else:
+    print "Sorry, I haven't tested on your OS.  Please email me for support."
 
 def copy(text):
-    """Copy some text to the x clipboard."""
-    p = subprocess.Popen("echo '%s' | xclip" % text.strip(), shell=True)
-    p.wait()
-    return not p.returncode
+    """Copy some text to the clipboard.  Return True if it succeeded,
+    False otherwise."""
+    prepared = text.strip().replace("'", "\\'")
+    if OS == "Darwin":
+        proc = subprocess.Popen("echo '%s' | pbcopy" % prepared, shell=True)
+    else:
+        proc = subprocess.Popen("echo '%s' | xclip" % prepared, shell=True)
+    proc.wait()
+    return not proc.returncode
 
 def base36(number):
     def convert(num, dd=False):
@@ -31,11 +68,19 @@ def base36(number):
     return convert(number)
 
 def notify(message):
-    if not pynotify.init("quickup"):
+    if not enable_notifications:
         return
-    n = pynotify.Notification(message)
-    n.set_timeout(3500)
-    n.show()
+    if OS == 'Darwin':
+        # call terminal-notifier;  use the terminal -sender because some
+        # versions don't work without it
+        subprocess.call(['terminal-notifier', '--open', 'quickup', '--message',
+            message, '-sender', 'com.apple.Terminal'])
+    else:
+        if not pynotify.init("quickup"):
+            return
+        n = pynotify.Notification(message)
+        n.set_timeout(3500)
+        n.show()
 
 def make_filename(hint):
     if hint != "auto":
@@ -52,10 +97,6 @@ def parse_args():
 
 def main():
     opts, args = parse_args()
-    if not test_for_xclip():
-        print "ERROR: You need to install xclip for quickup to work."
-        notify("ERROR: You need to install xclip for quickup to work.")
-        return
     local_name = args[0]
     filetype = local_name.rsplit('.', 1)[-1]
     remote_name = make_filename(opts.filename) + '.%s' % (filetype.lower())
