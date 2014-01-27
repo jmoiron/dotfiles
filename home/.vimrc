@@ -19,6 +19,12 @@ set incsearch
 set noswapfile
 set nowritebackup
 
+" don't redraw the screen so much during macros
+set lazyredraw
+
+" show matching [{()}]
+" set showmatch
+
 " don't use Ex mode, use Q for formatting
 map Q gq
 

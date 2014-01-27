@@ -94,6 +94,8 @@ let s:colors_name = get(g:, 'colors_name', '')
 
 silent! unlet s:style s:seoul256_background
 
+let s:seoul256_background = 234
+
 " 1. If g:seoul256_background is found
 if exists('g:seoul256_background')
   let s:seoul256_background = g:seoul256_background
@@ -209,7 +211,7 @@ call s:hi('Structure', [116, 23], ['', ''])
 
 call s:hi('Error', [252, s:light_bg_1], [52, 174])
 call s:hi('ErrorMsg', [252, s:light_bg_1], [52, 168])
-call s:hi('Underlined', [181, 168], ['', ''])
+call s:hi('Underlined', [181, s:dark_bg-2], ['', ''])
 
 " set textwidth=80
 " set colorcolumn=+1
@@ -220,9 +222,9 @@ call s:hi('ColorColumn', ['', ''], [s:dark_bg - 1, s:light_bg - 2])
 " hi CursorIM ctermfg=
 
 " set cursorline cursorcolumn
-call s:hi('CursorLine', ['', ''], [s:dark_bg - 1, s:light_bg - 1])
-call s:hi('CursorLineNr', [131, 131], [s:dark_bg - 1, s:light_bg - 1])
-call s:hi('CursorColumn', ['', ''], [s:dark_bg - 1, s:light_bg - 1])
+call s:hi('CursorLine', ['', ''], [s:dark_bg + 1, s:light_bg - 1])
+call s:hi('CursorLineNr', [131, 131], [s:dark_bg, s:light_bg - 1])
+call s:hi('CursorColumn', ['', ''], [s:dark_bg, s:light_bg - 1])
 
 call s:hi('Directory', [187, 95], ['', ''])
 
@@ -254,7 +256,7 @@ call s:hi('PmenuSbar', ['', ''], [65, 65])
 call s:hi('PmenuThumb', ['', ''], [23, 23])
 
 call s:hi('Search', [252, 255], [24, 74])
-call s:hi('IncSearch', [220, 220], [s:dark_bg + 1, 238])
+call s:hi('IncSearch', [252, 255], [s:dark_bg + 1, 238])
 
 " String delimiter, interpolation
 call s:hi('Special', [216, 173], ['', ''])
