@@ -29,3 +29,5 @@
     mod = status -uno
     revert = checkout
 
+[push]
+	default = matching
