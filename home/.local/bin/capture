@@ -1,0 +1,15 @@
+#!/bin/bash
+
+CAPPATH="$HOME/tmp-capture.png"
+
+if [ -n `which screencapture` ]; then
+    screencapture -i $CAPPATH
+
+    # esc exits screencapture without writing, don't try to upload in this case
+    if [ -f "$CAPPATH" ]; then
+        # make sure that it can find terminal-notifier on the PATH
+        export PATH=$PATH:/usr/local/bin/
+        $HOME/.local/bin/quickup $CAPPATH > $HOME/quickup.log
+        rm $CAPPATH
+    fi
+fi
