@@ -21,10 +21,8 @@ if [ "$TERM" = "xterm" ]; then
         esac
     else
         case "$COLORTERM" in
-            gnome-terminal)
-                # identify as xterm-256color because too many things don't know gnome-256color
-                TERM="xterm-256color"
-                ;;
+            "mate-terminal") TERM="xterm-256color" ;;
+            "gnome-terminal") TERM="xterm-256color" ;;
             *)
                 echo "Unrecognized COLORTERM: $COLORTERM"
                 ;;
