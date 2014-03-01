@@ -247,15 +247,15 @@ call s:HL('lCursor', 'none', 'none', 'inverse')
 
 call s:HL('Special', 'orange')
 
-call s:HL('Comment', 'medium', 'none', 'italic')
+call s:HL('Comment', 'dark3')
 call s:HL('Todo',    'fg', 'bg', 'bold')
 
 " Generic statement
 call s:HL('Statement',   'red')
 " if, then, else, endif, swicth, etc.
-call s:HL('Conditional', 'red')
+call s:HL('Conditional', 'blue')
 " for, do, while, etc.
-call s:HL('Repeat',      'red')
+call s:HL('Repeat',      'blue')
 " case, default, etc.
 call s:HL('Label',       'red')
 " try, catch, throw
@@ -263,7 +263,7 @@ call s:HL('Exception',   'red')
 " sizeof, "+", "*", etc.
 hi! def link Operator Normal
 " Any other keyword
-call s:HL('Keyword',     'red')
+call s:HL('Keyword',     'purple')
 
 " Variable name
 call s:HL('Identifier', 'blue')

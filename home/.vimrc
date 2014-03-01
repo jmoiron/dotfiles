@@ -208,3 +208,11 @@ if filereadable($HOME .  "/.vimrc.local")
     exec ':so ' . $HOME . "/.vimrc.local"
 endif
 
+let g:rehash256 = 1
+
+if !empty($VIM_COLO)
+    colo $VIM_COLO
+endif
+
+
+
