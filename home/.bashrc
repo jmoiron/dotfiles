@@ -175,7 +175,7 @@ WINEARCH=win32
 WINEPREFIX=~/.wine
 
 # go development
-export GO_VERSION=1.2
+export GO_VERSION=1.2.1
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 gvm use go$GO_VERSION > /dev/null 2>&1
 
