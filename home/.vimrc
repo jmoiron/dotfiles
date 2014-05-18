@@ -143,10 +143,10 @@ set enc=utf-8
 " set laststatus=2
 " set statusline=[%l,%c\ %P%M]\ %f\ %r%h%w
 
-if has("ruby")
-    map <F3> :FuzzyFinderTextMate<CR>
-    map <C-t> :FuzzyFinderTextMate<CR>
-endif
+" map old fuzzy finder textmate keys to ctrlp
+let g:ctrlp_match_window = 'top,order:ttb,min:1,max:15,results:15'
+map <F3> :CtrlP<CR>
+map <C-t> :CtrlP<CR>
 
 set ofu=syntaxcomplete#Complete
 set completeopt=longest,menuone
@@ -155,6 +155,7 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " make c-n behave a bit nicer
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
   \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
 " simulate omni-complete with M-space
 inoremap <expr> <C-space> pumvisible() ? '<C-n>' :
   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
@@ -178,7 +179,7 @@ if has("gui_running")
     " set guifont=Inconsolata\ 11
     " set linespacing to 0
     if has("gui_macvim")
-        set guifont=Consolas:h11
+        set guifont=Consolas:h15
     else
         "set guifont=Droid\ Sans\ Mono\ 9
         set guifont=Consolas\ 10
@@ -214,5 +215,6 @@ if !empty($VIM_COLO)
     colo $VIM_COLO
 endif
 
+set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 
