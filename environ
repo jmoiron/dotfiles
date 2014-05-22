@@ -1,0 +1,3 @@
+alias cm="~/dotfiles/bin/cm"
+export CM_CONFIG_PATH="$HOME/dotfiles/home"
+export CM_CONFIG_ROOT="$HOME"
