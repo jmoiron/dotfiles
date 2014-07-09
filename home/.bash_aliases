@@ -37,6 +37,7 @@ alias chrome="google-chrome"
 
 if [ "$OS" == "OSX" ]; then
     alias gvim="/Applications/MacVim.app/Contents/MacOS/Vim -g"
+    alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 fi
 
 alias t="t --task-dir ~/tasks --list tasks"
