@@ -14,8 +14,9 @@ syntax reset
 
 hi Cursor      guibg=#cc4455  guifg=white    gui=bold
 hi link CursorIM Cursor
+hi CursorLine  guibg=#332211
 hi Normal      guibg=#221100  guifg=white    gui=none
-hi NonText     guibg=#445566  guifg=#ffeecc  gui=bold
+hi NonText     guibg=bg  guifg=#ffeecc  gui=bold
 hi Visual      guibg=#557799  guifg=white    gui=none
 
 hi Linenr      guibg=bg	      guifg=#aaaaaa  gui=none
@@ -45,10 +46,10 @@ hi DiffText    guibg=#884444  guifg=fg	  gui=bold
 
 " Colors for Syntax Highlighting.
 
-hi Comment  guibg=#445566  guifg=#dddddd  gui=none
+hi Comment  guibg=bg  guifg=#777777  gui=none
 
 hi Constant    guibg=bg	   guifg=white	  gui=bold
-hi String      guibg=bg	   guifg=#ffffcc  gui=italic
+hi String      guibg=bg	   guifg=#ffffcc  gui=bold
 hi Character   guibg=bg	   guifg=#ffffcc  gui=bold
 hi Number      guibg=bg	   guifg=#bbddff  gui=bold
 hi Boolean     guibg=bg	   guifg=#bbddff  gui=none
