@@ -179,7 +179,8 @@ if has("gui_running")
     " set guifont=Inconsolata\ 11
     " set linespacing to 0
     if has("gui_macvim")
-        set guifont=Consolas:h15
+        set guifont=Consolas:h14
+        colo codeschool
     else
         "set guifont=Droid\ Sans\ Mono\ 9
         set guifont=Consolas\ 10
