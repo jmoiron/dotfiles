@@ -152,6 +152,7 @@ map <C-t> :CtrlP<CR>
 
 set ofu=syntaxcomplete#Complete
 set completeopt=longest,menuone
+
 " make enter just select the current completion choice
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " make c-n behave a bit nicer
@@ -159,8 +160,8 @@ inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
   \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " simulate omni-complete with M-space
-inoremap <expr> <C-space> pumvisible() ? '<C-n>' :
-  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+"inoremap <expr> <C-space> pumvisible() ? '<C-n>' :
+"  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " gvim only options:
 " gruvbox only behaves when jellybeans has been loaded..
@@ -185,7 +186,7 @@ if has("gui_running")
         colo codeschool
     else
         "set guifont=Droid\ Sans\ Mono\ 9
-        set guifont=Consolas\ 10
+        set guifont=Consolas\ 11.5
     endif
 
     set lsp=0

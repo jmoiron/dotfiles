@@ -2,7 +2,7 @@
 " Maintainer: Anders Korte
 " Last Change: 17 Mar 2005
 
-" Guardian color scheme 1.1
+" guardian color scheme 1.1
 
 " GUI only. :/
 
@@ -99,5 +99,5 @@ hi link htmlH6 htmlH5
 
 " And finally.
 
-let colors_name="Guardian"
+let colors_name="guardian"
 
