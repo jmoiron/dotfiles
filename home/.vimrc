@@ -145,6 +145,8 @@ set enc=utf-8
 
 " map old fuzzy finder textmate keys to ctrlp
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:15,results:15'
+let g:ctrlp_working_path_mode = 0
+set wildignore +=*.pyc,*.zip,.git,.hg,.svn,node_modules
 map <F3> :CtrlP<CR>
 map <C-t> :CtrlP<CR>
 
