@@ -352,10 +352,10 @@ function! s:hl_dflt_light()
     Highlight ErrorMsg      gui=NONE        guifg=White     guibg=Red
     Highlight IncSearch     gui=reverse     guifg=NONE      guibg=NONE
     Highlight Search        gui=NONE        guifg=NONE      guibg=Yellow
-    Highlight MoreMsg       gui=bold        guifg=SeaGreen  guibg=NONE
+    Highlight MoreMsg       gui=bold        guifg=Green  guibg=NONE
     Highlight ModeMsg       gui=bold        guifg=NONE      guibg=NONE
     Highlight LineNr        gui=NONE        guifg=Brown     guibg=NONE
-    Highlight Question      gui=bold        guifg=SeaGreen  guibg=NONE
+    Highlight Question      gui=bold        guifg=Green  guibg=NONE
     Highlight StatusLine    gui=bold,reverse    guifg=NONE  guibg=NONE
     Highlight StatusLineNC  gui=reverse     guifg=NONE      guibg=NONE
     Highlight VertSplit     gui=reverse     guifg=NONE      guibg=NONE
@@ -396,7 +396,7 @@ function! s:hl_dflt_dark()
     Highlight ErrorMsg      gui=NONE        guifg=White     guibg=Red
     Highlight IncSearch     gui=reverse     guifg=NONE      guibg=NONE
     Highlight Search        gui=NONE        guifg=Black     guibg=Yellow
-    Highlight MoreMsg       gui=bold        guifg=SeaGreen  guibg=NONE
+    Highlight MoreMsg       gui=bold        guifg=Green  guibg=NONE
     Highlight ModeMsg       gui=bold        guifg=NONE      guibg=NONE
     Highlight LineNr        gui=NONE        guifg=Yellow    guibg=NONE
     Highlight Question      gui=bold        guifg=Green     guibg=NONE
@@ -426,8 +426,8 @@ function! s:hl_dflt_dark()
     Highlight TabLine       gui=underline   guifg=NONE      guibg=DarkGrey
     Highlight TabLineSel    gui=bold        guifg=NONE      guibg=NONE
     Highlight TabLineFill   gui=reverse     guifg=NONE      guibg=NONE
-    Highlight CursorColumn  gui=NONE        guifg=NONE      guibg=Grey40
-    Highlight CursorLine    gui=NONE        guifg=NONE      guibg=Grey40
+    Highlight CursorColumn  gui=NONE        guifg=NONE      guibg=#6c6c6c
+    Highlight CursorLine    gui=NONE        guifg=NONE      guibg=#6c6c6c
     Highlight Cursor        gui=reverse     guifg=NONE      guibg=NONE
     Highlight lCursor       gui=reverse     guifg=NONE      guibg=NONE
     Highlight MatchParen    gui=NONE        guifg=NONE      guibg=DarkCyan

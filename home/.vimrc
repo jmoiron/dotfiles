@@ -219,6 +219,7 @@ if !empty($VIM_COLO)
     colo $VIM_COLO
 endif
 
-set runtimepath^=~/.vim/bundle/ctrlp.vim
+execute pathogen#infect()
+" set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 
