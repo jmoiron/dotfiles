@@ -20,3 +20,6 @@ mod = st -mard
 [merge-tools]
 vimdiff.executable = vim
 vimdiff.args = -d $base $local $output $other +close +close
+
+[trusted]
+users = 501
