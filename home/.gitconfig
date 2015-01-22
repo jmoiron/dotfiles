@@ -16,7 +16,6 @@
     added = yellow
     changed = green
     untracked = cyan
-
 [alias]
     st = status
     ci = commit
@@ -29,6 +28,8 @@
     mod = status -uno
     revert = checkout
     lg = log --color --no-merges  --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-
 [push]
-	default = matching
+    default = matching
+[core]
+    mergeoptions = --no-edit
+
