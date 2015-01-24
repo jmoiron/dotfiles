@@ -167,6 +167,8 @@ inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
 " colo gruvbox
 colo jellybeans
 set cursorline
+" disable visual bell
+set vb t_vb=
 
 if has("gui_running")
     " colo summerfruit
