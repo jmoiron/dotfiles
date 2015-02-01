@@ -175,9 +175,10 @@ WINEARCH=win32
 WINEPREFIX=~/.wine
 
 # go development
-export GO_VERSION=1.3
-[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-gvm use go$GO_VERSION > /dev/null 2>&1
+export GO_VERSION=1.4.1
+export GOROOT="$HOME/dev/go/root/go$GO_VERSION"
+export GOPATH="$HOME/dev/go"
+export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 
 # configuration management
 export CM_CONFIG_PATH="$HOME/dotfiles/home"

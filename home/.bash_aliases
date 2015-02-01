@@ -56,3 +56,4 @@ function go-link {
     ln -s $dirpath $pkg_path/
 }
 
+alias nzbfetch="~/.local/bin/nzbget -c .nzbget-old/nzbget.cfg"

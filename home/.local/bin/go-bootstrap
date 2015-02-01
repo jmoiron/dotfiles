@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+# initialize a new gopath with tools that i like/use/need
+
+version() {
+    # XXX: don't care about osx < 10.8
+    if [ "$(uname)" = "Darwin" ]; then
+        if [ "$(arch)" = "x86_64" ]; then
+            echo "darwin-amd64-osx10.8"
+            return
+        fi
+        echo "darwin-386-osx10.8"
+        return
+    fi
+    if [ "$(arch)" = "x86_64" ]; then
+        echo "linux-amd64"
+        return
+    fi
+    echo "linux-386"
+}
+
+if [ -z "$GO_VERSION" ]; then
+    echo "Must set GO_VERSION for version checking & downloading."
+elif [ ! -d "$GOROOT" ]; then
+    echo "Downloading go $GO_VERSION for installation at $GOROOT"
+    mkdir -p $GOROOT
+    name="go$GO_VERSION.$(version).tar.gz"
+    url="https://storage.googleapis.com/golang/$name"
+    wget -q -O "/tmp/$name" "$url"
+    tar -xzf "/tmp/$name" -C $GOROOT --strip-components=1
+fi
+
+echo "installing go.tools commands..."
+go get golang.org/x/tools/cmd/goimports
+go get golang.org/x/tools/cmd/godoc
+go get golang.org/x/tools/cmd/oracle
+go get golang.org/x/tools/cmd/vet
+go get golang.org/x/tools/cmd/cover
+
+echo "installing extra commands..."
+go get github.com/cespare/reflex
+go get github.com/golang/lint/golint
+go get github.com/nsf/gocode
+# until he accepts https://github.com/josharian/impl/pull/9
+# this will be broken
+#go get github.com/josharian/impl
+go get github.com/jmoiron/impl
+
