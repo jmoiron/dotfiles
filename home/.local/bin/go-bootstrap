@@ -36,13 +36,8 @@ go get golang.org/x/tools/cmd/godoc
 go get golang.org/x/tools/cmd/oracle
 go get golang.org/x/tools/cmd/vet
 go get golang.org/x/tools/cmd/cover
+go get golang.org/x/tools/cmd/prese
 
-echo "installing extra commands..."
-go get github.com/cespare/reflex
-go get github.com/golang/lint/golint
-go get github.com/nsf/gocode
-# until he accepts https://github.com/josharian/impl/pull/9
-# this will be broken
-#go get github.com/josharian/impl
-go get github.com/jmoiron/impl
-
+if [ -f $HOME/.go-bootstrap ]; then
+    . $HOME/.go-bootstrap
+fi

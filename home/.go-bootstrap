@@ -15,6 +15,19 @@ clone() {
     cd ..
 }
 
+echo "installing extra commands..."
+go get github.com/cespare/reflex
+go get github.com/golang/lint/golint
+go get github.com/nsf/gocode
+# until he accepts https://github.com/josharian/impl/pull/9
+# this will be broken
+#go get github.com/josharian/impl
+go get github.com/jmoiron/impl
+go get github.com/github/hub
+go get github.com/monochromegane/the_platinum_searcher/cmd/pt
+
+echo "cloning my repos"
+
 clone sqlx
 clone modl
 clone jigo
