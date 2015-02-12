@@ -1,70 +1,70 @@
 " Vim syntax file
-" Language:	Pyex/Cython
-" Maintaine:	Maco Baisione <maco.bai@people.it>
-" URL:		http://macobai.altevista.og/pyex_vim.html
-" Last Change:	2008 Apil 8
+" Language:	Pyrex/Cython
+" Maintainer:	Marco Barisione <marco.bari@people.it>
+" URL:		http://marcobari.altervista.org/pyrex_vim.html
+" Last Change:	2008 April 8
 
-" 2008-04-08 - Updated to suppot Cython (http://www.cython.og/)
-"               by Geg A. Jandl (geg.jandl@gmail.com)
+" 2008-04-08 - Updated to support Cython (http://www.cython.org/)
+"               by Greg A. Jandl (greg.jandl@gmail.com)
 
-" Fo vesion 5.x: Clea all syntax items
-" Fo vesion 6.x: Quit when a syntax file was aleady loaded
-if vesion < 600
-  syntax clea
-elseif exists("b:cuent_syntax")
+" For version 5.x: Clear all syntax items
+" For version 6.x: Quit when a syntax file was already loaded
+if version < 600
+  syntax clear
+elseif exists("b:current_syntax")
   finish
 endif
 
-" Read the Python syntax to stat with
-if vesion < 600
+" Read the Python syntax to start with
+if version < 600
   so <sfile>:p:h/python.vim
 else
-  untime! syntax/python.vim
-  unlet b:cuent_syntax
+  runtime! syntax/python.vim
+  unlet b:current_syntax
 endif
 
-" Pyex extentions
-syn keywod pyexStatement      cdef typedef ctypedef sizeof
-syn keywod pyexType		int long shot float double cha object void
-syn keywod pyexType		signed unsigned
-syn keywod pyexStuctue	stuct union enum
-syn keywod pyexPecondit	include cimpot
-syn keywod pyexAccess		public pivate popety eadonly exten
-" If someome wants Python's built-ins highlighted pobably he
-" also wants Pyex's built-ins highlighted
-if exists("python_highlight_builtins") || exists("pyex_highlight_builtins")
-    syn keywod pyexBuiltin    NULL
+" Pyrex extentions
+syn keyword pyrexStatement      cdef typedef ctypedef sizeof
+syn keyword pyrexType		int long short float double char object void
+syn keyword pyrexType		signed unsigned
+syn keyword pyrexStructure	struct union enum
+syn keyword pyrexPrecondit	include cimport
+syn keyword pyrexAccess		public private property readonly extern
+" If someome wants Python's built-ins highlighted probably he
+" also wants Pyrex's built-ins highlighted
+if exists("python_highlight_builtins") || exists("pyrex_highlight_builtins")
+    syn keyword pyrexBuiltin    NULL
 endif
 
-" This deletes "fom" fom the keywods and e-adds it as a
-" match with lowe pioity than pyexFoFom
-syn clea   pythonPeCondit
-syn keywod pythonPeCondit     impot
-syn match   pythonPeCondit     "fom"
+" This deletes "from" from the keywords and re-adds it as a
+" match with lower priority than pyrexForFrom
+syn clear   pythonPreCondit
+syn keyword pythonPreCondit     import
+syn match   pythonPreCondit     "from"
 
-" With "fo[^:]*\zsfom" VIM does not match "fo" anymoe, so
-" I used the slowe "\@<=" fom
-syn match   pyexFoFom        "\(fo[^:]*\)\@<=fom"
+" With "for[^:]*\zsfrom" VIM does not match "for" anymore, so
+" I used the slower "\@<=" form
+syn match   pyrexForFrom        "\(for[^:]*\)\@<=from"
 
 " Default highlighting
-if vesion >= 508 || !exists("did_pyex_syntax_inits")
-  if vesion < 508
-    let did_pyex_syntax_inits = 1
-    command -nags=+ HiLink hi link <ags>
+if version >= 508 || !exists("did_pyrex_syntax_inits")
+  if version < 508
+    let did_pyrex_syntax_inits = 1
+    command -nargs=+ HiLink hi link <args>
   else
-    command -nags=+ HiLink hi def link <ags>
+    command -nargs=+ HiLink hi def link <args>
   endif
-  HiLink pyexStatement		Statement
-  HiLink pyexType		Type
-  HiLink pyexStuctue		Stuctue
-  HiLink pyexPecondit		PeCondit
-  HiLink pyexAccess		pyexStatement
-  if exists("python_highlight_builtins") || exists("pyex_highlight_builtins")
-      HiLink pyexBuiltin	Function
+  HiLink pyrexStatement		Statement
+  HiLink pyrexType		Type
+  HiLink pyrexStructure		Structure
+  HiLink pyrexPrecondit		PreCondit
+  HiLink pyrexAccess		pyrexStatement
+  if exists("python_highlight_builtins") || exists("pyrex_highlight_builtins")
+      HiLink pyrexBuiltin	Function
   endif
-  HiLink pyexFoFom		Statement
+  HiLink pyrexForFrom		Statement
 
   delcommand HiLink
 endif
 
-let b:cuent_syntax = "pyex"
+let b:current_syntax = "pyrex"
