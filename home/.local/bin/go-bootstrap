@@ -5,14 +5,14 @@
 version() {
     # XXX: don't care about osx < 10.8
     if [ "$(uname)" = "Darwin" ]; then
-        if [ "$(arch)" = "x86_64" ]; then
+        if [ "$(uname -m)" = "x86_64" ]; then
             echo "darwin-amd64-osx10.8"
             return
         fi
         echo "darwin-386-osx10.8"
         return
     fi
-    if [ "$(arch)" = "x86_64" ]; then
+    if [ "$(uname -m)" = "x86_64" ]; then
         echo "linux-amd64"
         return
     fi

@@ -30,6 +30,27 @@ if [ "$TERM" = "xterm" ]; then
     fi
 fi
 
+# save our current operating system in the OS variable for quick use elsewhere
+case $(uname) in
+    Darwin)
+        OS="OSX"
+        ;;
+    *)
+        OS="Linux"
+        ;;
+esac
+
+# add some crap to the path;  some things in ~/.local/bin may be used for PS1
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/.gem/ruby/1.8/bin
+
+# add homebrew python path in OSX
+if [ "$OS" = "OSX" ]; then
+    source ~/.bashrc.osx
+else
+    alias open="xdg-open"
+fi
+
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
@@ -49,21 +70,11 @@ if [ -z "$debian_chroot" -a -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# save our current operating system in the OS variable for quick use elsewhere
-case $(uname) in
-    Darwin)
-        OS="OSX"
-        ;;
-    *)
-        OS="Linux"
-        ;;
-esac
-
 # HH:MM:SS user@hostname:path$
 # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\t\[\033[00m\] \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 GIT_PS1_SHOWDIRTYSTATE=true
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\t\[\033[00m\] \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[01;35m\]$(__git_ps1 " (%s)")\[\033[00m\]\$ '
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\t\[\033[00m\] \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$(pctilde $(pwd))\[\033[00m\]\[\033[01;35m\]$(__git_ps1 " (%s)")\[\033[00m\]\$ '
 
 
 
@@ -137,17 +148,6 @@ function ssh_export {
     cat ~/.ssh/id_rsa.pub | ssh "$1" "cat - >> ~/.ssh/authorized_keys"
 }
 
-# add some crap to the path
-export PATH=$PATH:$HOME/.local/bin
-export PATH=$PATH:$HOME/.gem/ruby/1.8/bin
-
-# add homebrew python path in OSX
-if [ "$OS" = "OSX" ]; then
-    source ~/.bashrc.osx
-else
-    alias open="xdg-open"
-fi
-
 export EDITOR=vim
 
 # virtualenv & python setup
@@ -175,7 +175,7 @@ WINEARCH=win32
 WINEPREFIX=~/.wine
 
 # go development
-export GO_VERSION=1.4.1
+export GO_VERSION=1.4.2
 export GOROOT="$HOME/dev/go/root/go$GO_VERSION"
 export GOPATH="$HOME/dev/go"
 export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
