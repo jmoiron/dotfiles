@@ -199,3 +199,7 @@ if [ -f ~/.bashrc.local ]; then
     source ~/.bashrc.local
 fi
 
+function ns {
+    python -c "import humanize; print humanize.naturalsize($1)"
+}
+
