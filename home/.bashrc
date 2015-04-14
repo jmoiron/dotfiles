@@ -94,8 +94,6 @@ if [ "$TERM" != "dumb" ]; then
         [ -e "$DIR_COLORS" ] || DIR_COLORS=""
         eval "`dircolors -b $DIR_COLORS`"
         alias ls='ls --color=auto -F'
-    else
-        alias ls="ls -GF"
     fi
     #alias dir='ls --color=auto --format=vertical'
     #alias vdir='ls --color=auto --format=long'

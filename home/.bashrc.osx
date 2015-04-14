@@ -5,6 +5,9 @@ export PATH="/usr/local/share/python/:$PATH"
 export PATH="`brew --prefix`/bin:$PATH"
 export PATH="$PATH:/usr/local/sbin"
 
+if [ -n `which gdircolors` ]; then
+    eval "`gdircolors -b $DIR_COLORS`"
+fi
 if [ -n `which gls` ]; then
     alias ls="gls -F --color=auto"
 fi
