@@ -186,7 +186,7 @@ if has("gui_running")
         set guifont=Consolas:h14
     else
         "set guifont=Droid\ Sans\ Mono\ 9
-        set guifont=Consolas\ 11.5
+        set guifont=Consolas\ 10
     endif
 
     set lsp=0
