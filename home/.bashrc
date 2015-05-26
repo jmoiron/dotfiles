@@ -101,12 +101,22 @@ fi
 
 # enable programmable completion features 
 if [ -f /etc/bash_completion ]; then
-    source /etc/bash_completion
+    . /etc/bash_completion
 fi
-if [ -d ~/.bash_completion.d ]; then
-    for i in ~/.bash_completion.d/*; do
-        source $i
-    done
+
+# if we're using brew's newer installed bash completion script, it unsets
+# "have" but installs a ton of symlinks to ~/.bash_completion.  Since it
+# handles sourcing ~/bash_completion.d/* then we just sidestep it on osx.
+if [ -n "$(which brew)" ]; then
+    if [ -f $(brew --prefix)/etc/bash_completion ]; then
+        . $(brew --prefix)/etc/bash_completion
+    fi
+else
+    if [ -d ~/.bash_completion.d ]; then
+        for i in ~/.bash_completion.d/*; do
+            source $i
+        done
+    fi
 fi
 
 # git junk
