@@ -111,6 +111,11 @@ if [ -n "$(which brew)" ]; then
     if [ -f $(brew --prefix)/etc/bash_completion ]; then
         . $(brew --prefix)/etc/bash_completion
     fi
+    if [ -d $(brew --prefix)/etc/bash_completion.d/ ]; then
+        for i in $(brew --prefix)/etc/bash_completion.d/*; do
+            source "$i"
+        done
+    fi
 else
     if [ -d ~/.bash_completion.d ]; then
         for i in ~/.bash_completion.d/*; do
