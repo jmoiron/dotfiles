@@ -19,18 +19,38 @@ version() {
     echo "linux-386"
 }
 
-if [ -z "$GO_VERSION" ]; then
-    echo "Must set GO_VERSION for version checking & downloading."
-elif [ ! -d "$GOROOT" ]; then
-    echo "Downloading go $GO_VERSION for installation at $GOROOT"
-    mkdir -p $GOROOT
-    name="go$GO_VERSION.$(version).tar.gz"
-    url="https://storage.googleapis.com/golang/$name"
-    wget -q -O "/tmp/$name" "$url"
-    tar -xzf "/tmp/$name" -C $GOROOT --strip-components=1
+if [ -z "$1" ]; then
+    echo "Usage: go-bootstrap go1.x.x"
+    exit
 fi
 
-echo "installing go.tools commands..."
+export GO_VERSION="$1"
+
+if [ -z "$GOROOT" ]; then
+    echo "Using default goroot ($HOME/go/root/$GO_VERSION)"
+    export GOROOT="$HOME/go/root/$GO_VERSION"
+else
+    echo "Using goroot $(dirname $GOROOT)/$GO_VERSION"
+    export GOROOT="$(dirname $GOROOT)/$GO_VERSION"
+fi
+
+echo "Downloading go $GO_VERSION for installation at $GOROOT"
+mkdir -p $GOROOT
+name="$GO_VERSION.$(version).tar.gz"
+url="https://storage.googleapis.com/golang/$name"
+wget --no-check-certificate -O "/tmp/$name" "$url"
+tar -xzf "/tmp/$name" -C $GOROOT --strip-components=1
+
+export PATH="$GOROOT/bin:$PATH"
+
+echo ""
+echo "Set:"
+echo "export GOROOT=$GOROOT"
+echo "export GOPATH=$GOPATH"
+echo "export PATH=$GOROOT/bin:\$PATH"
+echo ""
+
+echo "installing go.tools commands on GOPATH $GOPATH..."
 go get golang.org/x/tools/cmd/goimports
 go get golang.org/x/tools/cmd/godoc
 go get golang.org/x/tools/cmd/oracle
