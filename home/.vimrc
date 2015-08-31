@@ -146,6 +146,7 @@ set enc=utf-8
 " map old fuzzy finder textmate keys to ctrlp
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:15,results:15'
 let g:ctrlp_working_path_mode = 0
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 set wildignore +=*.pyc,*.zip,.git,.hg,.svn,node_modules,_workspace
 map <F3> :CtrlP<CR>
 
@@ -186,7 +187,7 @@ if has("gui_running")
         set guifont=Consolas:h14
     else
         "set guifont=Droid\ Sans\ Mono\ 9
-        set guifont=Consolas\ 10
+        set guifont=Consolas\ 11.5
     endif
 
     set lsp=0
