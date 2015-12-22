@@ -216,3 +216,5 @@ function ns {
     python -c "import humanize; print humanize.naturalsize($1)"
 }
 
+export PATH="$(printf "%s" "${PATH}" | /usr/bin/awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print}')"
+
