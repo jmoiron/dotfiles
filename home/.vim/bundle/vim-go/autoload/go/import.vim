@@ -2,49 +2,11 @@
 " Use of this source code is governed by a BSD-style
 " license that can be found in the LICENSE file.
 "
-" import.vim: Vim commands to import/drop Go packages.
+" Check out the docs for more information at /doc/vim-go.txt
 "
-" This filetype plugin adds three new commands for go buffers:
-"
-"   :Import {path}
-"
-"       Import ensures that the provided package {path} is imported
-"       in the current Go buffer, using proper style and ordering.
-"       If {path} is already being imported, an error will be
-"       displayed and the buffer will be untouched.
-" 
-"   :ImportAs {localname} {path}
-"
-"       Same as Import, but uses a custom local name for the package.
-"
-"   :Drop {path}
-"
-"       Remove the import line for the provided package {path}, if
-"       present in the current Go buffer.  If {path} is not being
-"       imported, an error will be displayed and the buffer will be
-"       untouched.
-"
-" In addition to these commands, there are also two shortcuts mapped:
-"
-"   \f  -  Runs :Import fmt
-"   \F  -  Runs :Drop fmt
-"
-" The backslash is the default maplocalleader, so it is possible that
-" your vim is set to use a different character (:help maplocalleader).
-"
-if exists("b:did_ftplugin")
-    finish
-endif
-
-command! -buffer -nargs=? -complete=customlist,go#complete#Package Drop call s:SwitchImport(0, '', <f-args>)
-command! -buffer -nargs=1 -complete=customlist,go#complete#Package Import call s:SwitchImport(1, '', <f-args>)
-command! -buffer -nargs=* -complete=customlist,go#complete#Package ImportAs call s:SwitchImport(1, <f-args>)
-map <buffer> <LocalLeader>f :Import fmt<CR>
-map <buffer> <LocalLeader>F :Drop fmt<CR>
-
-function! s:SwitchImport(enabled, localname, path)
+function! go#import#SwitchImport(enabled, localname, path, bang)
     let view = winsaveview()
-    let path = a:path
+    let path = substitute(a:path, '^\s*\(.\{-}\)\s*$', '\1', '')
 
     " Quotes are not necessary, so remove them if provided.
     if path[0] == '"'
@@ -53,10 +15,34 @@ function! s:SwitchImport(enabled, localname, path)
     if path[len(path)-1] == '"'
         let path = strpart(path, 0, len(path) - 1)
     endif
+
+    " if given a trailing slash, eg. `github.com/user/pkg/`, remove it
+    if path[len(path)-1] == '/'
+        let path = strpart(path, 0, len(path) - 1)
+    endif
+
     if path == ''
         call s:Error('Import path not provided')
         return
     endif
+
+    if a:bang == "!"
+        let out = system("go get -u -v ".shellescape(path))
+        if v:shell_error
+            call s:Error("Can't find import: " . path . ":" . out)
+        endif
+    endif
+    let exists = go#tool#Exists(path)
+    if exists == -1
+        call s:Error("Can't find import: " . path)
+        return
+    endif
+
+    " Extract any site prefix (e.g. github.com/).
+    " If other imports with the same prefix are grouped separately,
+    " we will add this new import with them.
+    " Only up to and including the first slash is used.
+    let siteprefix = matchstr(path, "^[^/]*/")
 
     let qpath = '"' . path . '"'
     if a:localname != ''
@@ -83,16 +69,31 @@ function! s:SwitchImport(enabled, localname, path)
             let appendstr = qlocalpath
             let indentstr = 1
             let appendline = line
+            let firstblank = -1
+            let lastprefix = ""
             while line <= line("$")
                 let line = line + 1
                 let linestr = getline(line)
                 let m = matchlist(getline(line), '^\()\|\(\s\+\)\(\S*\s*\)"\(.\+\)"\)')
                 if empty(m)
+                    if siteprefix == "" && a:enabled
+                        " must be in the first group
+                        break
+                    endif
+                    " record this position, but keep looking
+                    if firstblank < 0
+                        let firstblank = line
+                    endif
                     continue
                 endif
                 if m[1] == ')'
+                    " if there's no match, add it to the first group
+                    if appendline < 0 && firstblank >= 0
+                        let appendline = firstblank
+                    endif
                     break
                 endif
+                let lastprefix = matchstr(m[4], "^[^/]*/")
                 if a:localname != '' && m[3] != ''
                     let qlocalpath = printf('%-' . (len(m[3])-1) . 's %s', a:localname, qpath)
                 endif
@@ -103,7 +104,16 @@ function! s:SwitchImport(enabled, localname, path)
                     let deleteline = line
                     break
                 elseif m[4] < path
-                    let appendline = line
+                    " don't set candidate position if we have a site prefix,
+                    " we've passed a blank line, and this doesn't share the same
+                    " site prefix.
+                    if siteprefix == "" || firstblank < 0 || match(m[4], "^" . siteprefix) >= 0
+                        let appendline = line
+                    endif
+                elseif siteprefix != "" && match(m[4], "^" . siteprefix) >= 0
+                    " first entry of site group
+                    let appendline = line - 1
+                    break
                 endif
             endwhile
             break
@@ -194,8 +204,10 @@ function! s:SwitchImport(enabled, localname, path)
 
 endfunction
 
+
 function! s:Error(s)
     echohl Error | echo a:s | echohl None
 endfunction
+
 
 " vim:ts=4:sw=4:et
