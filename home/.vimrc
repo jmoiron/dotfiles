@@ -28,10 +28,13 @@ set lazyredraw
 " don't use Ex mode, use Q for formatting
 map Q gq
 
+execute pathogen#infect()
+
 " switch syntax highlighting on, when the terminal has colors
 " also switch on highlighting the last used search pattern.
 if &t_Co > 2 || has("gui_running")
   syntax on
+  syntax enable
   set hlsearch
 endif
 
@@ -163,21 +166,12 @@ inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
 "inoremap <expr> <C-space> pumvisible() ? '<C-n>' :
 "  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
-" gvim only options:
-" gruvbox only behaves when jellybeans has been loaded..
-" colo gruvbox
-colo jellybeans
 set cursorline
 " disable visual bell
 set vb t_vb=
 
+
 if has("gui_running")
-    " colo summerfruit
-    " colo github
-    " colo Tomorrow-Night-Blue
-    " colo railscasts " dark
-    " colorscheme ir_black " dark
-    " colo fruidle " light 
     " set guifont=Consolas\ 10
     " set guifont=Menlo\ 9
     " set guifont=Droid\ Sans\ Mono\ 9
@@ -187,7 +181,7 @@ if has("gui_running")
         set guifont=Consolas:h14
     else
         "set guifont=Droid\ Sans\ Mono\ 9
-        set guifont=Consolas\ 11.5
+        set guifont=Consolas\ 12
     endif
 
     set lsp=0
@@ -198,7 +192,6 @@ if has("gui_running")
     au GUIEnter * set lines=45 columns=130
     " ~~ taglist plugin ~~
     " map <F12> <ESC>:Tlist<CR>
-    colo flattr
 endif
 
 map <F2> <ESC>oimport ipdb; ipdb.set_trace();<ESC>:w<CR>
@@ -221,8 +214,7 @@ if !empty($VIM_COLO)
     colo $VIM_COLO
 endif
 
-execute pathogen#infect()
-" set runtimepath^=~/.vim/bundle/ctrlp.vim
+set novb
 
 " vim-go stuff
 
@@ -232,3 +224,15 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
+
+if has("gui_running")
+    let mycolors = ['peel', 'tribal', 'peacock', 'juicy', 'super', 'flattr',
+                   \'snappy-contrast', 'rainbow', 'frontier-contrast',
+                   \'darkside', 'tonic', 'gloom-contrast']
+    let choice = mycolors[localtime() % len(mycolors)]
+    exe 'colo ' . choice
+    unlet mycolors
+    unlet choice
+else
+    colo jellybeans
+endif

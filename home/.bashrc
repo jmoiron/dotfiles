@@ -187,11 +187,6 @@ export BLOCKSIZE=1024
 WINEARCH=win32
 WINEPREFIX=~/.wine
 
-# go development
-export GO_VERSION=1.4.2
-export GOROOT="$HOME/dev/go/root/go$GO_VERSION"
-export GOPATH="$HOME/dev/go"
-export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 
 # configuration management
 export CM_CONFIG_PATH="$HOME/dotfiles/home"
@@ -212,9 +207,22 @@ if [ -f ~/.bashrc.local ]; then
     source ~/.bashrc.local
 fi
 
-function ns {
+ns() {
     python -c "import humanize; print humanize.naturalsize($1)"
 }
 
-export PATH="$(printf "%s" "${PATH}" | /usr/bin/awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print}')"
+pathclean() {
+    export PATH="$(printf "%s" "${PATH}" | /usr/bin/awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print}')"
+}
 
+# go development
+export GOVERSION=1.5.2
+
+goversion() {
+    export GOROOT="$HOME/dev/go/root/$1"
+    export GOPATH="$HOME/dev/go"
+    export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
+    pathclean
+}
+
+goversion "go$GOVERSION"
