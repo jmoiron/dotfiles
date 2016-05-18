@@ -1,0 +1,77 @@
+#!/usr/bin/env python
+
+import argparse
+import sys
+import os
+
+def parse_range(fields):
+    """Given fields that are csv with either integers or slice-syntaxed ranges
+    (eg 0:2 for 0,1), return a list of fields as integers."""
+    if not fields:
+        return []
+    ret = []
+    for field in fields.split(","):
+        if ":" in field:
+            fieldsp = field.split(":")
+            if len(fieldsp) != 2:
+                raise ValueError("Field slices must be N:N (%s)" % field)
+            ret.extend(range(*map(int, fieldsp)))
+        else:
+            ret.append(int(field))
+    return ret
+
+def main():
+    parser = argparse.ArgumentParser(description="line based string splitter that is not shit")
+    parser.add_argument("-n", "--num", help="split this many times (-1=inf)", type=int, default=-1)
+    parser.add_argument("-d", "--delimiter", help="delimiter to split by", type=str, default=",")
+    parser.add_argument("-j", "--join", help="string used to join outut for multiple positions", type=str, default=" ")
+    parser.add_argument("-f", "--fields", help="fields to select (csv + slice syntax for ranges)", type=str)
+    options = parser.parse_args()
+
+    try:
+        options.range = parse_range(options.fields)
+    except Exception as e:
+        parser.print_usage()
+        print str(e)
+        sys.exit(-1)
+
+    if options.num == 0:
+        parser.print_usage()
+        print "-n=0 is a noop and invalid"
+        sys.exit(-1)
+
+    if options.num > 0:
+        for n in options.range:
+            if n > options.num:
+                parser.print_usage()
+                print "-n %d results in fewer splits than field %d" % (options.num, n)
+                sys.exit(-1)
+
+    spl(options)
+
+def split(line, options):
+    sp = line.split(options.delimiter, options.num)
+    if not options.fields:
+        return sp
+    ret = []
+    for f in options.range:
+        if len(sp) > f:
+            ret.append(sp[f])
+    return ret
+
+def spl(options):
+    delim = options.join
+    if delim == '\\n':
+        delim = "\n"
+    for line in sys.stdin:
+        line = line.strip()
+        if not line:
+            continue
+        pieces = split(line, options)
+        print delim.join(pieces)
+
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        pass
