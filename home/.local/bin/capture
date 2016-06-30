@@ -16,6 +16,11 @@ elif [ -n "$(which scrot)" ]; then
     # https://code.google.com/p/xmonad/issues/detail?id=476
     sleep 0.2
     scrot -s $CAPPATH &> $HOME/quickup.log
+    # if we have convert/imagemagick, shave 1 pixel from the image, as scrot
+    # adds a black outline which looks bad
+    if [ -n "$(which convert)" ]; then
+        convert "$CAPPATH" -shave 1x1 "$CAPPATH"
+    fi
     $HOME/.local/bin/quickup $CAPPATH >> $HOME/quickup.log
     rm $CAPPATH
 fi
