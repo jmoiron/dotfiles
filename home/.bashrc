@@ -215,14 +215,9 @@ pathclean() {
     export PATH="$(printf "%s" "${PATH}" | /usr/bin/awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print}')"
 }
 
-# go development
-export GOVERSION=1.5.2
+eval "$(gimme 1.6.2)"
 
-goversion() {
-    export GOROOT="$HOME/dev/go/root/$1"
-    export GOPATH="$HOME/dev/go"
-    export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
-    pathclean
-}
+export GOPATH=$HOME/dev/go
+export PATH=$GOPATH/bin:$PATH
+pathclean
 
-goversion "go$GOVERSION"
