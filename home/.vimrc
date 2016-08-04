@@ -181,6 +181,7 @@ if has("gui_running")
         set guifont=Consolas:h14
     else
         "set guifont=Droid\ Sans\ Mono\ 9
+        "set guifont=Office\ Code\ Pro\ 11
         set guifont=Consolas\ 12
     endif
 
@@ -226,13 +227,15 @@ let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 
 if has("gui_running")
-    let mycolors = ['peel', 'tribal', 'peacock', 'juicy', 'super', 'flattr',
-                   \'snappy-contrast', 'rainbow', 'frontier-contrast',
-                   \'darkside', 'tonic', 'gloom-contrast']
-    let choice = mycolors[localtime() % len(mycolors)]
-    exe 'colo ' . choice
-    unlet mycolors
-    unlet choice
+    "let mycolors = ['peel', 'tribal', 'peacock', 'juicy', 'super', 'flattr',
+    "               \'snappy-contrast', 'rainbow', 'frontier-contrast',
+    "               \'darkside', 'tonic', 'gloom-contrast']
+    "let choice = mycolors[localtime() % len(mycolors)]
+    "exe 'colo ' . choice
+    "unlet mycolors
+    "unlet choice
+    colo tender
 else
     colo jellybeans
 endif
+
