@@ -215,7 +215,7 @@ pathclean() {
     export PATH="$(printf "%s" "${PATH}" | /usr/bin/awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print}')"
 }
 
-eval "$(gimme 1.6.2)"
+eval "$(gimme 1.7.2)"
 
 export GOPATH=$HOME/dev/go
 export PATH=$GOPATH/bin:$PATH
