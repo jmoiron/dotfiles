@@ -182,7 +182,7 @@ if has("gui_running")
     else
         "set guifont=Droid\ Sans\ Mono\ 9
         "set guifont=Office\ Code\ Pro\ 11
-        set guifont=Consolas\ 12
+        set guifont=Consolas\ 10.5
     endif
 
     set lsp=0
@@ -234,7 +234,8 @@ if has("gui_running")
     "exe 'colo ' . choice
     "unlet mycolors
     "unlet choice
-    colo tender
+    "colo tender
+    colo flattr
 else
     colo jellybeans
 endif
