@@ -234,9 +234,10 @@ if has("gui_running")
     "exe 'colo ' . choice
     "unlet mycolors
     "unlet choice
-    "colo tender
     colo flattr
 else
     colo jellybeans
 endif
+
+call togglebg#map("<F6>")
 
