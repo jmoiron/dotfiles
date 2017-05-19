@@ -11,6 +11,7 @@ alias l='ls -CF'
 
 # auto-sudo aliases 
 alias apt-get='sudo apt-get'
+alias apt='sudo apt'
 alias dpkg='sudo dpkg'
 alias modprobe='sudo modprobe'
 

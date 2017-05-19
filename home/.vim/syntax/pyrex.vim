@@ -38,7 +38,7 @@ endif
 
 " This deletes "from" from the keywords and re-adds it as a
 " match with lower priority than pyrexForFrom
-syn clear   pythonPreCondit
+" syn clear   pythonPreCondit
 syn keyword pythonPreCondit     import
 syn match   pythonPreCondit     "from"
 
