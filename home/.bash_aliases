@@ -58,3 +58,7 @@ function go-link {
 }
 
 alias nzbfetch="~/.local/bin/nzbget -c .nzbget-old/nzbget.cfg"
+
+gocover() {
+    go test -cover -coverprofile=cover.out && go tool cover -html=cover.out
+}
