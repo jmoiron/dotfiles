@@ -576,6 +576,10 @@ if has('gui_running') || &t_Co == 88 || &t_Co == 256
   call <sid>X('NERDTreeExecFile',      s:duo_1, '', '')
   " }}}
 
+  " Python highlighting -----------------------------------------------------{{{
+  hi link pythonOperator Conditional
+
+
   " Ruby highlighting -------------------------------------------------------{{{
   call <sid>X('rubyBlock',                     s:uno_2,         '', '')
   call <sid>X('rubyBlockParameter',            s:uno_2,         '', '')
