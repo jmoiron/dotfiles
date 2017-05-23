@@ -202,6 +202,9 @@ map <F4> <ESC>i#!/usr/bin/env python<CR># -*- coding: utf-8 -*-<CR><CR>""" """<C
 vmap gl :<C-U>!svn blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 vmap gk :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 
+noremap gc :GoCoverageToggle<cr>
+map gt :GoTest<cr>
+
 set mouse=a
 set ttymouse=xterm2
 
@@ -210,15 +213,9 @@ if filereadable($HOME .  "/.vimrc.local")
 endif
 
 let g:rehash256 = 1
-
-if !empty($VIM_COLO)
-    colo $VIM_COLO
-endif
-
 set novb
 
 " vim-go stuff
-
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
@@ -237,6 +234,10 @@ if has("gui_running")
     colo flattr
 else
     colo jellybeans
+endif
+
+if !empty($VIM_COLO)
+    colo $VIM_COLO
 endif
 
 call togglebg#map("<F6>")
