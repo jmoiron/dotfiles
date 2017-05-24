@@ -18,13 +18,13 @@ hi LineNr       ctermfg=239 ctermbg=234                             gui=None    
 hi NonText      ctermfg=234 ctermbg=234                             gui=None        guifg=#1c1c1c       guibg=#1c1c1c
 
 hi VertSplit    ctermfg=237 ctermbg=235 cterm=none                  gui=None        guifg=#3a3a3a       guibg=#262626
-hi StatusLine   ctermfg=249 ctermbg=235 cterm=underline             gui=underline   guifg=#b2b2b2       guibg=#262626
+hi StatusLine   ctermfg=249 ctermbg=235 cterm=none                  gui=none        guifg=#c2c2c2       guibg=#333333
 hi StatusLineNC ctermfg=243 ctermbg=235 cterm=none                  gui=None        guifg=#767676       guibg=#262626
 
 hi DiffDelete   ctermfg=234 ctermbg=233                             gui=None        guifg=#1c1c1c       guibg=#121212
 hi DiffAdd      ctermbg=236                                         gui=None        guibg=#303030
 hi DiffChange   ctermbg=235                                         gui=None        guibg=#262626
-hi DiffText     ctermfg=161 ctermbg=234 cterm=underline             gui=underline   guifg=#df005f       guibg=#1c1c1c
+hi DiffText     ctermfg=161 ctermbg=234 cterm=none                  gui=none        guifg=#df005f       guibg=#1c1c1c
 
 hi Cursor       ctermfg=234 ctermbg=250                             gui=None        guifg=#1c1c1c       guibg=#bcbcbc
 
@@ -33,7 +33,7 @@ hi Visual       ctermfg=234 ctermbg=122                             gui=None    
 hi Folded       ctermfg=244 ctermbg=235                             gui=None        guifg=#808080       guibg=#262626
 hi FoldColumn   ctermfg=244 ctermbg=234                             gui=None        guifg=#808080       guibg=#1c1c1c
 
-hi IncSearch    ctermfg=234 ctermbg=214 cterm=underline             gui=underline   guifg=#1c1c1c       guibg=#ffaf00
+hi IncSearch    ctermfg=234 ctermbg=214 cterm=none                  gui=none        guifg=#1c1c1c       guibg=#ffaf00
 hi Search       ctermfg=234 ctermbg=214 cterm=none                  gui=None        guifg=#1c1c1c       guibg=#ffaf00
 
 hi ModeMsg      ctermfg=117 ctermbg=234 cterm=bold                  gui=bold        guifg=#87dfff       guibg=#1c1c1c
@@ -55,7 +55,7 @@ if version >= 700 " Vim 7.x specific colors
     hi CursorLine   ctermbg=235 cterm=none                          gui=None        guibg=#262626
     hi CursorColumn ctermbg=235 cterm=none                          gui=None        guibg=#262626
 
-    hi MatchParen   ctermfg=196 ctermbg=234 cterm=bold,reverse      gui=bold,reverse    guifg=#ff0000       guibg=#1c1c1c
+    hi MatchParen   ctermfg=196 ctermbg=234 cterm=bold,reverse      gui=bold,reverse    guifg=#ffaf00       guibg=#1c1c1c
 
     hi Tabline      ctermfg=245 ctermbg=235 cterm=underline         gui=underline   guifg=#8a8a8a       guibg=#262626
     hi TablineSel   ctermfg=250 ctermbg=234 cterm=bold              gui=bold        guifg=#bcbcbc       guibg=#1c1c1c
@@ -89,7 +89,7 @@ hi Special    ctermfg=050 ctermbg=234                               gui=None    
 hi Delimiter  ctermfg=153 ctermbg=234                               gui=None        guifg=#afdfff       guibg=#1c1c1c
 hi Number     ctermfg=086 ctermbg=234                               gui=None        guifg=#5fffdf       guibg=#1c1c1c
 hi Ignore     ctermfg=214 ctermbg=234                               gui=None        guifg=#ffaf00       guibg=#1c1c1c
-hi Todo       ctermfg=196 ctermbg=234                               gui=None        guifg=#ff0000       guibg=#1c1c1c
+hi Todo       ctermfg=196 ctermbg=234                               gui=bold        guifg=#ffaf00       guibg=#1c1c1c
 hi Exception  ctermfg=080 ctermbg=234 cterm=bold                    gui=bold        guifg=#5fdfdf       guibg=#1c1c1c
 
 "vim: sw=4

@@ -122,11 +122,12 @@ set laststatus=2
 " http://www.ruby-doc.org/core-2.0/File.html#method-c-fnmatch
 :let g:fuzzy_ignore="*.pyc;*.swp;*.gif;*.png;**node_modules**;**lib/bootstrap**;**/migrations/**"
 
+map <leader>p :CtrlPBufTagAll<cr>
+
 " ctrl-h to kill the search highlight
 nmap <silent> <C-H> :silent noh<CR>
 " ctrl-n to toggle line numbers
 nmap <silent> <C-N> :set invnumber<CR>
-nmap <leader>t :FuzzyFinderTextmateRefreshFiles<CR>
 
 " ~~ screen style keymapping ~~
 set hidden
@@ -146,10 +147,11 @@ set enc=utf-8
 " set laststatus=2
 " set statusline=[%l,%c\ %P%M]\ %f\ %r%h%w
 
-" map old fuzzy finder textmate keys to ctrlp
+" put the ctrl-p window on the top, ordering top-to-bottom, 15 results
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:15,results:15'
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_user_command = ['.git/']
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_user_command = ['.git']
+
 set wildignore +=*.pyc,*.zip,.git,.hg,.svn,node_modules,_workspace
 map <F3> :CtrlP<CR>
 
@@ -231,7 +233,8 @@ if has("gui_running")
     "exe 'colo ' . choice
     "unlet mycolors
     "unlet choice
-    colo flattr
+    " colo flattr
+    colo muon
 else
     colo jellybeans
 endif
