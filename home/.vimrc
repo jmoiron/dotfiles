@@ -200,13 +200,8 @@ endif
 map <F2> <ESC>oimport ipdb; ipdb.set_trace();<ESC>:w<CR>
 map <F4> <ESC>i#!/usr/bin/env python<CR># -*- coding: utf-8 -*-<CR><CR>""" """<CR><ESC>
 
-" svn blame lines selected in visual mode with 'gl'
-vmap gl :<C-U>!svn blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+" blame lines selected in visual mode
 vmap gk :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
-
-noremap gc :GoCoverageToggle<cr>
-map gt :GoTest<cr>
-
 set mouse=a
 set ttymouse=xterm2
 
@@ -224,6 +219,10 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
+
+map <leader>c :GoCoverageToggle<cr>
+map <leader>t :GoTest<cr>
+
 
 if has("gui_running")
     "let mycolors = ['peel', 'tribal', 'peacock', 'juicy', 'super', 'flattr',
