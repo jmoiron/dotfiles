@@ -122,8 +122,6 @@ set laststatus=2
 " http://www.ruby-doc.org/core-2.0/File.html#method-c-fnmatch
 :let g:fuzzy_ignore="*.pyc;*.swp;*.gif;*.png;**node_modules**;**lib/bootstrap**;**/migrations/**"
 
-map <leader>p :CtrlPBufTagAll<cr>
-
 " ctrl-h to kill the search highlight
 nmap <silent> <C-H> :silent noh<CR>
 " ctrl-n to toggle line numbers
@@ -147,13 +145,17 @@ set enc=utf-8
 " set laststatus=2
 " set statusline=[%l,%c\ %P%M]\ %f\ %r%h%w
 
+
+" ctrl-p
+
 " put the ctrl-p window on the top, ordering top-to-bottom, 15 results
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:15,results:15'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_user_command = ['.git']
 
+map <leader>p :CtrlPBufTagAll<cr>
+
 set wildignore +=*.pyc,*.zip,.git,.hg,.svn,node_modules,_workspace
-map <F3> :CtrlP<CR>
 
 set ofu=syntaxcomplete#Complete
 set completeopt=longest,menuone
@@ -197,6 +199,7 @@ if has("gui_running")
     " map <F12> <ESC>:Tlist<CR>
 endif
 
+" TODO: use real snippets
 map <F2> <ESC>oimport ipdb; ipdb.set_trace();<ESC>:w<CR>
 map <F4> <ESC>i#!/usr/bin/env python<CR># -*- coding: utf-8 -*-<CR><CR>""" """<CR><ESC>
 
