@@ -212,6 +212,9 @@ if filereadable($HOME .  "/.vimrc.local")
     exec ':so ' . $HOME . "/.vimrc.local"
 endif
 
+" disable bracketed paste
+set t_BE=
+
 let g:rehash256 = 1
 set novb
 
