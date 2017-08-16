@@ -12,6 +12,8 @@ if [ -n `which gls` ]; then
     alias ls="gls -F --color=auto"
 fi
 
+alias gvim="/Applications/MacVim.app/Contents/bin/mvim"
+
 bind '"\e[5C": forward-word'
 bind '"\e[5D": backward-word'
 bind '"\e[1;5C": forward-word'

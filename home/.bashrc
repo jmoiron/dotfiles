@@ -46,7 +46,7 @@ export PATH=$PATH:$HOME/.gem/ruby/1.8/bin
 
 # add homebrew python path in OSX
 if [ "$OS" = "OSX" ]; then
-    source ~/.bashrc.osx
+    source $HOME/.bashrc.osx
 else
     alias open="xdg-open"
 fi

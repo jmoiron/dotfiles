@@ -28,17 +28,15 @@ alias dt='python manage.py test'
 alias mpy='python manage.py'
 
 # fix gvim issues in ubuntu 9.10
-alias gvim='gvim 2>/dev/null'
+if [ "$OS" != "OSX" ]; then
+  alias gvim='gvim 2>/dev/null'
+fi
 
 # 'serve' simple webserver
 alias serve='python -m SimpleHTTPServer'
 
 # chrome shortcut
 alias chrome="google-chrome"
-
-if [ "$OS" == "OSX" ]; then
-    alias gvim="mvim"
-fi
 
 alias t="t --task-dir ~/tasks --list tasks"
 
