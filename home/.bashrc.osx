@@ -9,7 +9,7 @@ if [ -n `which gdircolors` ]; then
     eval "`gdircolors -b $DIR_COLORS`"
 fi
 if [ -n `which gls` ]; then
-    alias ls="gls -F --color=auto"
+    alias ls="gls -NF --color=auto"
 fi
 
 alias gvim="/Applications/MacVim.app/Contents/bin/mvim"

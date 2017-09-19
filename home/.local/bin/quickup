@@ -67,13 +67,13 @@ def base36(number):
         return convert(num, dd) + dd[rem]
     return convert(number)
 
-def notify(message):
+def notify(message, url=None):
     if not enable_notifications:
         return
     if OS == 'Darwin':
         # call terminal-notifier;  use the terminal -sender because some
         # versions don't work without it
-        subprocess.call(['terminal-notifier', '-open', 'quickup', '-message',
+        subprocess.call(['terminal-notifier', '-open', url, '-message',
             message, '-sender', 'com.apple.Terminal'])
     else:
         if not pynotify.init("quickup"):
@@ -112,9 +112,9 @@ def main():
     if not p.returncode:
         copy(remote_url)
         print "Uploaded %s to %s" % (local_name, remote_url)
-        notify("Uploaded %s to %s" % (local_name, remote_url))
+        notify("Uploaded %s to %s" % (local_name, remote_url), url=remote_url)
     else:
-        notify("Something went wrong uploading %s to %s" % (local_name, remote_dest))
+        notify("Something went wrong uploading %s to %s" % (local_name, remote_dest), url=remote_url)
 
 if __name__ == '__main__':
     main()
