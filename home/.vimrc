@@ -229,6 +229,7 @@ let g:go_fmt_command = "goimports"
 map <leader>c :GoCoverageToggle<cr>
 map <leader>t :GoTest<cr>
 
+autocmd Syntax * syntax keyword Todo DEPRECATED containedin=.*Comment
 
 if has("gui_running")
     "let mycolors = ['peel', 'tribal', 'peacock', 'juicy', 'super', 'flattr',
@@ -238,8 +239,8 @@ if has("gui_running")
     "exe 'colo ' . choice
     "unlet mycolors
     "unlet choice
-    " colo flattr
-    colo muon
+    " colo muon
+    colo flattr
 else
     colo jellybeans
 endif
