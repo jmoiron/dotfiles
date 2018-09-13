@@ -1,5 +1,7 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
+export LS_ARGS="-N"
+
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
@@ -14,6 +16,7 @@ if [ "$TERM" = "xterm" ]; then
             "XTerm(256)") TERM="xterm=256color" ;;
             "XTerm(88)") TERM="xterm-88color" ;;
             "XTerm") ;;
+            "truecolor") ;;
             "") ;;
             *)
                 echo "Unrecognized XTERM_VERSION: $XTERM_VERSION"
@@ -23,6 +26,7 @@ if [ "$TERM" = "xterm" ]; then
         case "$COLORTERM" in
             "mate-terminal") TERM="xterm-256color" ;;
             "gnome-terminal") TERM="xterm-256color" ;;
+            "truecolor") ;;
             *)
                 echo "Unrecognized COLORTERM: $COLORTERM"
                 ;;
@@ -93,7 +97,7 @@ if [ "$TERM" != "dumb" ]; then
         [ -e "$HOME/.dircolors" ] && DIR_COLORS="$HOME/.dircolors"
         [ -e "$DIR_COLORS" ] || DIR_COLORS=""
         eval "`dircolors -b $DIR_COLORS`"
-        alias ls='ls --color=auto -F'
+        alias ls="ls --color=auto -F $LS_ARGS"
     fi
     #alias dir='ls --color=auto --format=vertical'
     #alias vdir='ls --color=auto --format=long'
@@ -206,6 +210,9 @@ fi
 if [ -f ~/.bashrc.local ]; then
     source ~/.bashrc.local
 fi
+
+# disable ls quoting
+QUOTING_STYLE=literal
 
 ns() {
     python -c "import humanize; print humanize.naturalsize($1)"
