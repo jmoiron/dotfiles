@@ -1,18 +1,19 @@
 # OSX only bashrc
 
-export PATH="/usr/local/Cellar/python/2.7.1/bin:$PATH"
-export PATH="/usr/local/share/python/:$PATH"
+# export PATH="/usr/local/Cellar/python/2.7.1/bin:$PATH"
+# export PATH="/usr/local/share/python/:$PATH"
+export PATH="$PATH:/usr/local/sbin:/usr/local/bin"
 export PATH="`brew --prefix`/bin:$PATH"
-export PATH="$PATH:/usr/local/sbin"
 
-if [ -n `which gdircolors` ]; then
+if [ -n "$(which gdircolors)" ]; then
     eval "`gdircolors -b $DIR_COLORS`"
 fi
-if [ -n `which gls` ]; then
+if [ -n "$(which gls)" ]; then
     alias ls="gls -NF --color=auto"
 fi
 
-alias gvim="/Applications/MacVim.app/Contents/bin/mvim"
+# homebrew version of mvim
+alias gvim=mvim
 
 bind '"\e[5C": forward-word'
 bind '"\e[5D": backward-word'
@@ -20,3 +21,11 @@ bind '"\e[1;5C": forward-word'
 bind '"\e[1;5D": backward-word'
 
 alias pctilde="pctilde-osx"
+
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/gnu-which/libexec/gnubin:$PATH"
+
+
