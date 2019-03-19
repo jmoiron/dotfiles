@@ -149,15 +149,15 @@ set enc=utf-8
 " ctrl-p
 
 " put the ctrl-p window on the top, ordering top-to-bottom, 15 results
-let g:ctrlp_match_window = 'top,order:ttb,min:1,max:15,results:15'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_user_command = ['.git']
+" let g:ctrlp_match_window = 'top,order:ttb,min:1,max:15,results:15'
+" let g:ctrlp_working_path_mode = 'ra'
+" let g:ctrlp_user_command = ['.git']
 
-map <leader>p :CtrlPBufTagAll<cr>
+" map <leader>p :CtrlPBufTagAll<cr>
 
 set wildignore +=*.pyc,*.zip,.git,.hg,.svn,node_modules,_workspace
 
-set ofu=syntaxcomplete#Complete
+" set ofu=syntaxcomplete#Complete
 set completeopt=longest,menuone
 
 " make enter just select the current completion choice
@@ -173,6 +173,9 @@ inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
 set cursorline
 " disable visual bell
 set vb t_vb=
+set novisualbell
+set noerrorbells
+autocmd! GUIEnter * set vb t_vb=
 
 
 if has("gui_running")
@@ -224,10 +227,15 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_info_mode = "gocode"
+let g:go_gocode_propose_source = 0
 let g:go_fmt_command = "goimports"
 
 map <leader>c :GoCoverageToggle<cr>
 map <leader>t :GoTest<cr>
+
+map <leader>x :ccl<cr>
 
 autocmd Syntax * syntax keyword Todo DEPRECATED containedin=.*Comment
 
@@ -240,7 +248,8 @@ if has("gui_running")
     "unlet mycolors
     "unlet choice
     " colo muon
-    colo flattr
+    " colo flattr
+    colo palenight
 else
     colo jellybeans
 endif
@@ -250,4 +259,9 @@ if !empty($VIM_COLO)
 endif
 
 call togglebg#map("<F6>")
+
+if executable('pt')
+    let g:ackprg = 'pt --nogroup --nocolor'
+    set grepprg=pt\ --nogroup\ --nocolor
+endif
 

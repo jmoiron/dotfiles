@@ -197,10 +197,17 @@ export CM_CONFIG_PATH="$HOME/dotfiles/home"
 export CM_UNSAFE_SYNC=true
 export CM_CONFIG_ROOT="$HOME"
 alias cm="~/dotfiles/bin/cm"
-function cmup {
+
+cmup() {
     pushd ~/dotfiles > /dev/null
     git pull
     popd > /dev/null
+}
+
+update-tools() {
+    go get -u github.com/cespare/reflex
+    go get -u github.com/monochromegane/the_platinum_searcher/cmd/pt
+    go get -u github.com/junegunn/fzf
 }
 
 if [ -f ~/.bash_aliases ]; then
