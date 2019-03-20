@@ -234,8 +234,9 @@ let g:go_fmt_command = "goimports"
 
 map <leader>c :GoCoverageToggle<cr>
 map <leader>t :GoTest<cr>
-
 map <leader>x :ccl<cr>
+map <leader>s :Pt<cr>
+map <leader>b :Buffers<cr>
 
 autocmd Syntax * syntax keyword Todo DEPRECATED containedin=.*Comment
 
@@ -260,8 +261,21 @@ endif
 
 call togglebg#map("<F6>")
 
+" fzf and pt
+nmap <silent> <C-p> :FZF<CR>
+let g:fzf_layout = { 'down': '~30%' }
+
 if executable('pt')
     let g:ackprg = 'pt --nogroup --nocolor'
     set grepprg=pt\ --nogroup\ --nocolor
 endif
+
+command! -bang -nargs=* Pt
+  \ call fzf#vim#grep(
+  \   'pt --column --numbers --color --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
+noremap <leader># :Pt <c-r><c-w><cr>
 
