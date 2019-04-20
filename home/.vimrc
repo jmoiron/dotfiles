@@ -252,7 +252,7 @@ if has("gui_running")
     " colo flattr
     colo palenight
 else
-    colo jellybeans
+    colo seoul256
 endif
 
 if !empty($VIM_COLO)
