@@ -172,9 +172,9 @@ inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
 
 set cursorline
 " disable visual bell
-set vb t_vb=
 set novisualbell
 set noerrorbells
+set vb t_vb=
 autocmd! GUIEnter * set vb t_vb=
 
 
@@ -228,12 +228,15 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
-let g:go_info_mode = "gocode"
 let g:go_gocode_propose_source = 0
+let g:go_info_mode = "gocode"
 let g:go_fmt_command = "goimports"
+let g:go_list_type = 'quickfix'
+let g:go_jump_to_error = 0
+let g:go_auto_type_info = 1
 
 map <leader>c :GoCoverageToggle<cr>
-map <leader>t :GoTest<cr>
+map <leader>t :GoTest!<cr>
 map <leader>x :ccl<cr>
 map <leader>s :Pt<cr>
 map <leader>b :Buffers<cr>
