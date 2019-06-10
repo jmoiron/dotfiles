@@ -41,6 +41,7 @@ endif
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
 
+  autocmd FileType yaml setlocal sw=2 ts=2
   filetype plugin indent on
   
   augroup vimrcEx
