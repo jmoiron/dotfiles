@@ -18,6 +18,7 @@ set incsearch
 
 set noswapfile
 set nowritebackup
+set modeline
 
 " don't redraw the screen so much during macros
 set lazyredraw
@@ -43,6 +44,9 @@ if has("autocmd")
 
   autocmd FileType yaml setlocal sw=2 ts=2
   filetype plugin indent on
+
+  " run black on save for python
+  autocmd BufWritePost *.py silent! execute ':Black'
   
   augroup vimrcEx
   au!
@@ -282,4 +286,6 @@ command! -bang -nargs=* Pt
   \   <bang>0)
 
 noremap <leader># :Pt <c-r><c-w><cr>
+
+let g:black_linelength = 120
 
