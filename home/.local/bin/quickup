@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Quickly upload shit to my server."""
@@ -23,29 +23,35 @@ def which(program):
 if OS == 'Darwin':
     version = map(int, platform.mac_ver()[0].split('.'))
     if version < [10, 9]:
-        print "ERROR: OSX support only for 10.9+ (new notification-center required)"
+        print("ERROR: OSX support only for 10.9+ (new notification-center required)")
         sys.exit(-1)
     if not which("pbcopy"):
-        print "ERROR: could not find pbcopy, which is required for quickup."
+        print("ERROR: could not find pbcopy, which is required for quickup.")
         sys.exit(-1)
     if not which("terminal-notifier"):
-        print "ERROR: notifications require `terminal-notifier`, install via brew."
+        print("ERROR: notifications require `terminal-notifier`, install via brew.")
     else:
         enable_notifications = True
 elif OS == 'Linux':
     if not which("xclip"):
-        print "ERROR: Could not find xclip, which is required for quickup."
+        print("ERROR: Could not find xclip, which is required for quickup.")
         sys.exit(-1)
     try:
         import pynotify
         enable_notifications = True
+        if not hasattr(pynotify, 'init'):
+            import notify2 as pynotify
     except ImportError:
-        import traceback
-        print "Could not import pynotify, error was:"
-        traceback.print_exc()
-        print "Continuing without notifications."
+        try:
+            import notify2 as pynotify
+        except ImportError:
+            import traceback
+            print("Could not import pynotify, error was:")
+            traceback.print_exc()
+            print("Continuing without notifications.")
+
 else:
-    print "Sorry, I haven't tested on your OS.  Please email me for support."
+    print("Sorry, I haven't tested on your OS.  Please email me for support.")
 
 def copy(text):
     """Copy some text to the clipboard.  Return True if it succeeded,
@@ -111,7 +117,7 @@ def main():
     p.wait()
     if not p.returncode:
         copy(remote_url)
-        print "Uploaded %s to %s" % (local_name, remote_url)
+        print("Uploaded %s to %s" % (local_name, remote_url))
         notify("Uploaded %s to %s" % (local_name, remote_url), url=remote_url)
     else:
         notify("Something went wrong uploading %s to %s" % (local_name, remote_dest), url=remote_url)
