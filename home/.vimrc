@@ -163,7 +163,8 @@ set enc=utf-8
 set wildignore +=*.pyc,*.zip,.git,.hg,.svn,node_modules,_workspace
 
 " set ofu=syntaxcomplete#Complete
-set completeopt=longest,menuone
+" set completeopt=longest,menuone
+set completeopt=menuone,noinsert
 
 " make enter just select the current completion choice
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -233,8 +234,6 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
-let g:go_gocode_propose_source = 0
-let g:go_info_mode = "gocode"
 let g:go_fmt_command = "goimports"
 let g:go_list_type = 'quickfix'
 let g:go_jump_to_error = 0
@@ -286,6 +285,9 @@ command! -bang -nargs=* Pt
   \   <bang>0)
 
 noremap <leader># :Pt <c-r><c-w><cr>
+
+" coc.vim settings
+
 
 let g:black_linelength = 120
 
