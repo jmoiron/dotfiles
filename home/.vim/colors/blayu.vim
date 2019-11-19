@@ -37,6 +37,7 @@ let s:palette.panel     = "#dfb46a" " changed
 let s:palette.guide     = "#5c7b99" " done
 let s:palette.line      = "#0e2133" " done
 let s:palette.selection = "#dfb46a" " done
+let s:palette.darker    = "#1e3143" " done
 let s:palette.fg        = "#e6e0cf" " done
 let s:palette.fg_idle   = "#7390bf" " done
 
@@ -90,9 +91,9 @@ exe "let s:fmt_revb = ' gui=NONE".s:r.s:b.  " cterm=NONE".s:r.s:b.  " term=NONE"
 exe "hi! Normal"        .s:fg_fg          .s:bg_bg          .s:fmt_none
 exe "hi! ColorColumn"   .s:fg_none        .s:bg_line        .s:fmt_none
 " Conceal, Cursor, CursorIM
-exe "hi! CursorColumn"  .s:fg_none        .s:bg_line        .s:fmt_none
-exe "hi! CursorLine"    .s:fg_selection   .s:bg_bg          .s:fmt_none
-exe "hi! CursorLineNr"  .s:fg_accent      .s:bg_line        .s:fmt_none
+exe "hi! CursorColumn"  .s:fg_none        .s:bg_panel       .s:fmt_none
+exe "hi! CursorLine"    .s:fg_none        .s:bg_darker       .s:fmt_none
+exe "hi! CursorLineNr"  .s:fg_accent      .s:bg_darker       .s:fmt_none
 exe "hi! LineNr"        .s:fg_guide       .s:bg_none        .s:fmt_none
 
 exe "hi! Directory"     .s:fg_fg_idle     .s:bg_none        .s:fmt_none
