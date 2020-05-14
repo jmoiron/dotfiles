@@ -288,6 +288,5 @@ noremap <leader># :Pt <c-r><c-w><cr>
 
 " coc.vim settings
 
-
 let g:black_linelength = 120
 
