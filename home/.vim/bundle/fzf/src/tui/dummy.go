@@ -25,12 +25,12 @@ const (
 	Reverse          = Attr(1 << 6)
 )
 
-func (r *FullscreenRenderer) Init()       {}
-func (r *FullscreenRenderer) Pause(bool)  {}
-func (r *FullscreenRenderer) Resume(bool) {}
-func (r *FullscreenRenderer) Clear()      {}
-func (r *FullscreenRenderer) Refresh()    {}
-func (r *FullscreenRenderer) Close()      {}
+func (r *FullscreenRenderer) Init()             {}
+func (r *FullscreenRenderer) Pause(bool)        {}
+func (r *FullscreenRenderer) Resume(bool, bool) {}
+func (r *FullscreenRenderer) Clear()            {}
+func (r *FullscreenRenderer) Refresh()          {}
+func (r *FullscreenRenderer) Close()            {}
 
 func (r *FullscreenRenderer) DoesAutoWrap() bool { return false }
 func (r *FullscreenRenderer) GetChar() Event     { return Event{} }
@@ -39,6 +39,6 @@ func (r *FullscreenRenderer) MaxY() int          { return 0 }
 
 func (r *FullscreenRenderer) RefreshWindows(windows []Window) {}
 
-func (r *FullscreenRenderer) NewWindow(top int, left int, width int, height int, borderStyle BorderStyle) Window {
+func (r *FullscreenRenderer) NewWindow(top int, left int, width int, height int, preview bool, borderStyle BorderStyle) Window {
 	return nil
 }

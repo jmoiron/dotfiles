@@ -257,10 +257,11 @@ if has("gui_running")
     "unlet choice
     " colo muon
     " colo flattr
-    colo palenight
-else
-    colo seoul256
 endif
+
+" colo palenight
+colo vadelma
+set background=light
 
 if !empty($VIM_COLO)
     colo $VIM_COLO

@@ -32,3 +32,5 @@
 	default = current
 [core]
     mergeoptions = --no-edit
+[pull]
+	rebase = false

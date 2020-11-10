@@ -6,7 +6,7 @@ ROOT_DIR       := $(shell dirname $(MAKEFILE))
 SOURCES        := $(wildcard *.go src/*.go src/*/*.go) $(MAKEFILE)
 
 REVISION       := $(shell git log -n 1 --pretty=format:%h -- $(SOURCES))
-BUILD_FLAGS    := -a -ldflags "-X main.revision=$(REVISION) -w -extldflags=$(LDFLAGS)" -tags "$(TAGS)"
+BUILD_FLAGS    := -a -ldflags "-X main.revision=$(REVISION) -w '-extldflags=$(LDFLAGS)'" -tags "$(TAGS)"
 
 BINARY32       := fzf-$(GOOS)_386
 BINARY64       := fzf-$(GOOS)_amd64
@@ -41,6 +41,8 @@ else ifeq ($(UNAME_M),armv6l)
 else ifeq ($(UNAME_M),armv7l)
 	BINARY := $(BINARYARM7)
 else ifeq ($(UNAME_M),armv8l)
+	BINARY := $(BINARYARM8)
+else ifeq ($(UNAME_M),aarch64)
 	BINARY := $(BINARYARM8)
 else ifeq ($(UNAME_M),ppc64le)
 	BINARY := $(BINARYPPC64LE)

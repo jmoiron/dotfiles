@@ -371,7 +371,7 @@ func FuzzyMatchV2(caseSensitive bool, normalize bool, forward bool, input *util.
 	// The first occurrence of each character in the pattern
 	offset32, F := alloc32(offset32, slab, M)
 	// Rune array
-	offset32, T := alloc32(offset32, slab, N)
+	_, T := alloc32(offset32, slab, N)
 	input.CopyRunes(T)
 
 	// Phase 2. Calculate bonus for each point
@@ -453,7 +453,7 @@ func FuzzyMatchV2(caseSensitive bool, normalize bool, forward bool, input *util.
 	copy(H, H0[f0:lastIdx+1])
 
 	// Possible length of consecutive chunk at each position.
-	offset16, C := alloc16(offset16, slab, width*M)
+	_, C := alloc16(offset16, slab, width*M)
 	copy(C, C0[f0:lastIdx+1])
 
 	Fsub := F[1:]
@@ -773,12 +773,17 @@ func PrefixMatch(caseSensitive bool, normalize bool, forward bool, text *util.Ch
 		return Result{0, 0, 0}, nil
 	}
 
-	if text.Length() < len(pattern) {
+	trimmedLen := 0
+	if !unicode.IsSpace(pattern[0]) {
+		trimmedLen = text.LeadingWhitespaces()
+	}
+
+	if text.Length()-trimmedLen < len(pattern) {
 		return Result{-1, -1, 0}, nil
 	}
 
 	for index, r := range pattern {
-		char := text.Get(index)
+		char := text.Get(trimmedLen + index)
 		if !caseSensitive {
 			char = unicode.ToLower(char)
 		}
@@ -790,14 +795,17 @@ func PrefixMatch(caseSensitive bool, normalize bool, forward bool, text *util.Ch
 		}
 	}
 	lenPattern := len(pattern)
-	score, _ := calculateScore(caseSensitive, normalize, text, pattern, 0, lenPattern, false)
-	return Result{0, lenPattern, score}, nil
+	score, _ := calculateScore(caseSensitive, normalize, text, pattern, trimmedLen, trimmedLen+lenPattern, false)
+	return Result{trimmedLen, trimmedLen + lenPattern, score}, nil
 }
 
 // SuffixMatch performs suffix-match
 func SuffixMatch(caseSensitive bool, normalize bool, forward bool, text *util.Chars, pattern []rune, withPos bool, slab *util.Slab) (Result, *[]int) {
 	lenRunes := text.Length()
-	trimmedLen := lenRunes - text.TrailingWhitespaces()
+	trimmedLen := lenRunes
+	if len(pattern) == 0 || !unicode.IsSpace(pattern[len(pattern)-1]) {
+		trimmedLen -= text.TrailingWhitespaces()
+	}
 	if len(pattern) == 0 {
 		return Result{trimmedLen, trimmedLen, 0}, nil
 	}
@@ -828,14 +836,30 @@ func SuffixMatch(caseSensitive bool, normalize bool, forward bool, text *util.Ch
 // EqualMatch performs equal-match
 func EqualMatch(caseSensitive bool, normalize bool, forward bool, text *util.Chars, pattern []rune, withPos bool, slab *util.Slab) (Result, *[]int) {
 	lenPattern := len(pattern)
-	if text.Length() != lenPattern {
+	if lenPattern == 0 {
+		return Result{-1, -1, 0}, nil
+	}
+
+	// Strip leading whitespaces
+	trimmedLen := 0
+	if !unicode.IsSpace(pattern[0]) {
+		trimmedLen = text.LeadingWhitespaces()
+	}
+
+	// Strip trailing whitespaces
+	trimmedEndLen := 0
+	if !unicode.IsSpace(pattern[lenPattern-1]) {
+		trimmedEndLen = text.TrailingWhitespaces()
+	}
+
+	if text.Length()-trimmedLen-trimmedEndLen != lenPattern {
 		return Result{-1, -1, 0}, nil
 	}
 	match := true
 	if normalize {
 		runes := text.ToRunes()
 		for idx, pchar := range pattern {
-			char := runes[idx]
+			char := runes[trimmedLen+idx]
 			if !caseSensitive {
 				char = unicode.To(unicode.LowerCase, char)
 			}
@@ -845,14 +869,15 @@ func EqualMatch(caseSensitive bool, normalize bool, forward bool, text *util.Cha
 			}
 		}
 	} else {
-		runesStr := text.ToString()
+		runes := text.ToRunes()
+		runesStr := string(runes[trimmedLen : len(runes)-trimmedEndLen])
 		if !caseSensitive {
 			runesStr = strings.ToLower(runesStr)
 		}
 		match = runesStr == string(pattern)
 	}
 	if match {
-		return Result{0, lenPattern, (scoreMatch+bonusBoundary)*lenPattern +
+		return Result{trimmedLen, trimmedLen + lenPattern, (scoreMatch+bonusBoundary)*lenPattern +
 			(bonusFirstCharMultiplier-1)*bonusBoundary}, nil
 	}
 	return Result{-1, -1, 0}, nil

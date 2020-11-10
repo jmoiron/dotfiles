@@ -1,6 +1,238 @@
 CHANGELOG
 =========
 
+0.22.1
+------
+- Support preview scroll offset relative to window height
+  ```sh
+  git grep --line-number '' |
+    fzf --delimiter : \
+        --preview 'bat --style=numbers --color=always --highlight-line {2} {1}' \
+        --preview-window +{2}-/2
+  ```
+- Added `--preview-window` option for sharp edges (`--preview-window sharp`)
+- Reduced vertical padding around the preview window when `--preview-window
+  noborder` is used
+- Vim
+    - Popup width and height can be given in absolute integer values
+    - Added `fzf#exec()` function for getting the path of fzf executable
+        - It also downloads the latest binary if it's not available by running
+          `./install --bin`
+
+0.22.0
+------
+- Added more options for `--bind`
+    - `backward-eof` event
+      ```sh
+      # Aborts when you delete backward when the query prompt is already empty
+      fzf --bind backward-eof:abort
+      ```
+    - `refresh-preview` action
+      ```sh
+      # Rerun preview command when you hit '?'
+      fzf --preview 'echo $RANDOM' --bind '?:refresh-preview'
+      ```
+    - `preview` action
+      ```sh
+      # Default preview command with an extra preview binding
+      fzf --preview 'file {}' --bind '?:preview:cat {}'
+
+      # A preview binding with no default preview command
+      # (Preview window is initially empty)
+      fzf --bind '?:preview:cat {}'
+
+      # Preview window hidden by default, it appears when you first hit '?'
+      fzf --bind '?:preview:cat {}' --preview-window hidden
+      ```
+- Added preview window option for setting the initial scroll offset
+  ```sh
+  # Initial scroll offset is set to the line number of each line of
+  # git grep output *minus* 5 lines
+  git grep --line-number '' |
+    fzf --delimiter : --preview 'nl {1}' --preview-window +{2}-5
+  ```
+- Added support for ANSI colors in `--prompt` string
+- Smart match of accented characters
+    - An unaccented character in the query string will match both accented and
+      unaccented characters, while an accented character will only match
+      accented characters. This is similar to how "smart-case" match works.
+- Vim plugin
+    - `tmux` layout option for using fzf-tmux
+      ```vim
+      let g:fzf_layout = { 'tmux': '-p90%,60%' }
+      ```
+
+0.21.1
+------
+- Shell extension
+    - CTRL-R will remove duplicate commands
+- fzf-tmux
+    - Supports tmux popup window (require tmux 3.2 or above)
+        - ```sh
+          # 50% width and height
+          fzf-tmux -p
+
+          # 80% width and height
+          fzf-tmux -p 80%
+
+          # 80% width and 40% height
+          fzf-tmux -p 80%,40%
+          fzf-tmux -w 80% -h 40%
+
+          # Window position
+          fzf-tmux -w 80% -h 40% -x 0 -y 0
+          fzf-tmux -w 80% -h 40% -y 1000
+
+          # Write ordinary fzf options after --
+          fzf-tmux -p -- --reverse --info=inline --margin 2,4 --border
+          ```
+        - On macOS, you can build the latest tmux from the source with
+          `brew install tmux --HEAD`
+- Bug fixes
+    - Fixed Windows file traversal not to include directories
+    - Fixed ANSI colors with `--keep-right`
+    - Fixed _fzf_complete for zsh
+- Built with Go 1.14.1
+
+0.21.0
+------
+- `--height` option is now available on Windows as well (@kelleyma49)
+- Added `--pointer` and `--marker` options
+- Added `--keep-right` option that keeps the right end of the line visible
+  when it's too long
+- Style changes
+    - `--border` will now print border with rounded corners around the
+      finder instead of printing horizontal lines above and below it.
+      The previous style is available via `--border=horizontal`
+    - Unicode spinner
+- More keys and actions for `--bind`
+- Added PowerShell script for downloading Windows binary
+- Vim plugin: Built-in floating windows support
+  ```vim
+  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+  ```
+- bash: Various improvements in key bindings (CTRL-T, CTRL-R, ALT-C)
+    - CTRL-R will start with the current command-line as the initial query
+    - CTRL-R properly supports multi-line commands
+- Fuzzy completion API changed
+  ```sh
+  # Previous: fzf arguments given as a single string argument
+  # - This style is still supported, but it's deprecated
+  _fzf_complete "--multi --reverse --prompt=\"doge> \"" "$@" < <(
+    echo foo
+  )
+
+  # New API: multiple fzf arguments before "--"
+  # - Easier to write multiple options
+  _fzf_complete --multi --reverse --prompt="doge> " -- "$@" < <(
+    echo foo
+  )
+  ```
+- Bug fixes and improvements
+
+0.20.0
+------
+- Customizable preview window color (`preview-fg` and `preview-bg` for `--color`)
+  ```sh
+  fzf --preview 'cat {}' \
+      --color 'fg:#bbccdd,fg+:#ddeeff,bg:#334455,preview-bg:#223344,border:#778899' \
+      --border --height 20 --layout reverse --info inline
+  ```
+- Removed the immediate flicking of the screen on `reload` action.
+  ```sh
+  : | fzf --bind 'change:reload:seq {q}' --phony
+  ```
+- Added `clear-query` and `clear-selection` actions for `--bind`
+- It is now possible to split a composite bind action over multiple `--bind`
+  expressions by prefixing the later ones with `+`.
+  ```sh
+  fzf --bind 'ctrl-a:up+up'
+
+  # Can be now written as
+  fzf --bind 'ctrl-a:up' --bind 'ctrl-a:+up'
+
+  # This is useful when you need to write special execute/reload form (i.e. `execute:...`)
+  # to avoid parse errors and add more actions to the same key
+  fzf --multi --bind 'ctrl-l:select-all+execute:less {+f}' --bind 'ctrl-l:+deselect-all'
+  ```
+- Fixed parse error of `--bind` expression where concatenated execute/reload
+  action contains `+` character.
+  ```sh
+  fzf --multi --bind 'ctrl-l:select-all+execute(less {+f})+deselect-all'
+  ```
+- Fixed bugs of reload action
+    - Not triggered when there's no match even when the command doesn't have
+      any placeholder expressions
+    - Screen not properly cleared when `--header-lines` not filled on reload
+
+0.19.0
+------
+
+- Added `--phony` option which completely disables search functionality.
+  Useful when you want to use fzf only as a selector interface. See below.
+- Added "reload" action for dynamically updating the input list without
+  restarting fzf. See https://github.com/junegunn/fzf/issues/1750 to learn
+  more about it.
+  ```sh
+  # Using fzf as the selector interface for ripgrep
+  RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+  INITIAL_QUERY="foo"
+  FZF_DEFAULT_COMMAND="$RG_PREFIX '$INITIAL_QUERY' || true" \
+    fzf --bind "change:reload:$RG_PREFIX {q} || true" \
+        --ansi --phony --query "$INITIAL_QUERY"
+  ```
+- `--multi` now takes an optional integer argument which indicates the maximum
+  number of items that can be selected
+  ```sh
+  seq 100 | fzf --multi 3 --reverse --height 50%
+  ```
+- If a placeholder expression for `--preview` and `execute` action (and the
+  new `reload` action) contains `f` flag, it is replaced to the
+  path of a temporary file that holds the evaluated list. This is useful
+  when you multi-select a large number of items and the length of the
+  evaluated string may exceed [`ARG_MAX`][argmax].
+  ```sh
+  # Press CTRL-A to select 100K items and see the sum of all the numbers
+  seq 100000 | fzf --multi --bind ctrl-a:select-all \
+                   --preview "awk '{sum+=\$1} END {print sum}' {+f}"
+  ```
+- `deselect-all` no longer deselects unmatched items. It is now consistent
+  with `select-all` and `toggle-all` in that it only affects matched items.
+- Due to the limitation of bash, fuzzy completion is enabled by default for
+  a fixed set of commands. A helper function for easily setting up fuzzy
+  completion for any command is now provided.
+  ```sh
+  # usage: _fzf_setup_completion path|dir COMMANDS...
+  _fzf_setup_completion path git kubectl
+  ```
+- Info line style can be changed by `--info=STYLE`
+    - `--info=default`
+    - `--info=inline` (same as old `--inline-info`)
+    - `--info=hidden`
+- Preview window border can be disabled by adding `noborder` to
+  `--preview-window`.
+- When you transform the input with `--with-nth`, the trailing white spaces
+  are removed.
+- `ctrl-\`, `ctrl-]`, `ctrl-^`, and `ctrl-/` can now be used with `--bind`
+- See https://github.com/junegunn/fzf/milestone/15?closed=1 for more details
+
+[argmax]: https://unix.stackexchange.com/questions/120642/what-defines-the-maximum-size-for-a-command-single-argument
+
+0.18.0
+------
+
+- Added placeholder expression for zero-based item index: `{n}` and `{+n}`
+    - `fzf --preview 'echo {n}: {}'`
+- Added color option for the gutter: `--color gutter:-1`
+- Added `--no-unicode` option for drawing borders in non-Unicode, ASCII
+  characters
+- `FZF_PREVIEW_LINES` and `FZF_PREVIEW_COLUMNS` are exported to preview process
+    - fzf still overrides `LINES` and `COLUMNS` as before, but they may be
+      reset by the default shell.
+- Bug fixes and improvements
+    - See https://github.com/junegunn/fzf/milestone/14?closed=1
+- Built with Go 1.12.1
+
 0.17.5
 ------
 
