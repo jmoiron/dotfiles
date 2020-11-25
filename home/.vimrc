@@ -260,6 +260,7 @@ if has("gui_running")
 endif
 
 " colo palenight
+" colo muon
 colo vadelma
 set background=light
 

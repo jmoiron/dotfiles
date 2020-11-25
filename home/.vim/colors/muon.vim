@@ -14,7 +14,7 @@ endif
 let g:colors_name="muon"
 
 hi Normal       ctermfg=250 ctermbg=234                             gui=None        guifg=#bcbcbc       guibg=#1c1c1c
-hi LineNr       ctermfg=239 ctermbg=234                             gui=None        guifg=#4e4e4e       guibg=#1c1c1c
+hi LineNr       ctermfg=239 ctermbg=234 cterm=none                  gui=None        guifg=#4e4e4e       guibg=#1c1c1c
 hi NonText      ctermfg=234 ctermbg=234                             gui=None        guifg=#1c1c1c       guibg=#1c1c1c
 
 hi VertSplit    ctermfg=237 ctermbg=235 cterm=none                  gui=None        guifg=#3a3a3a       guibg=#262626
@@ -27,7 +27,6 @@ hi DiffChange   ctermbg=235                                         gui=None    
 hi DiffText     ctermfg=161 ctermbg=234 cterm=none                  gui=none        guifg=#df005f       guibg=#1c1c1c
 
 hi Cursor       ctermfg=234 ctermbg=250                             gui=None        guifg=#1c1c1c       guibg=#bcbcbc
-
 hi Visual       ctermfg=234 ctermbg=122                             gui=None        guifg=#1c1c1c       guibg=#87ffdf
 
 hi Folded       ctermfg=244 ctermbg=235                             gui=None        guifg=#808080       guibg=#262626
@@ -74,6 +73,7 @@ endif
 
 if version >= 703 " Vim 7.3 specific colors
     hi ColorColumn ctermbg=235                                      gui=None        guibg=#262626
+    hi CursorLineNr cterm=bold
 endif
 
 " syntax highlighting groups
