@@ -239,6 +239,9 @@ let g:go_list_type = 'quickfix'
 let g:go_jump_to_error = 0
 let g:go_auto_type_info = 1
 
+map <leader>y "+y
+map <leader>p "+p
+
 map <leader>c :GoCoverageToggle<cr>
 map <leader>t :GoTest!<cr>
 map <leader>x :ccl<cr>
