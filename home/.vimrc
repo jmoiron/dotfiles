@@ -263,9 +263,9 @@ if has("gui_running")
 endif
 
 " colo palenight
-" colo muon
-colo vadelma
-set background=light
+"colo vadelma
+"set background=light
+colo muon
 
 if !empty($VIM_COLO)
     colo $VIM_COLO

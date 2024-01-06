@@ -44,6 +44,7 @@ case $(uname) in
         ;;
 esac
 
+
 # add some crap to the path;  some things in ~/.local/bin may be used for PS1
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/.gem/ruby/1.8/bin
@@ -53,6 +54,10 @@ if [ "$OS" = "OSX" ]; then
     source $HOME/.bashrc.osx
 else
     alias open="xdg-open"
+fi
+
+if [ -n "$(uname -r |grep -i microsoft)" ]; then
+    source $HOME/.bashrc.wsl
 fi
 
 
@@ -78,7 +83,7 @@ fi
 # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\t\[\033[00m\] \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 GIT_PS1_SHOWDIRTYSTATE=true
-export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\t\[\033[00m\] \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$(pctilde $(pwd))\[\033[00m\]\[\033[01;35m\]$(__git_ps1 " (%s)")\[\033[00m\]\$ '
+export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\t\[\033[00m\] \[\033[01;32m\]\u@sanji\[\033[00m\]:\[\033[01;34m\]$(pctilde $(pwd))\[\033[00m\]\[\033[01;35m\]$(__git_ps1 " (%s)")\[\033[00m\]\$ '
 
 
 
@@ -229,7 +234,7 @@ pathclean() {
     export PATH="$(printf "%s" "${PATH}" | /usr/bin/awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print}')"
 }
 
-eval "$(gimme 1.16.5)"
+eval "$(gimme 1.20.5)"
 export PATH=$GOPATH/bin:$PATH
 pathclean
 

@@ -1,0 +1,7 @@
+
+# cd to $HOME if i'm in some weird path (like system32)
+if [[ "$(pwd)" != "$HOME"* ]]; then
+    cd $HOME
+fi
+
+export PATH="$PATH:$HOME/go/bin"
